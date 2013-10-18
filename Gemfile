@@ -10,10 +10,14 @@ gem 'sqlite3'
 group :development, :test do
   gem 'rspec-rails', '2.14.0'
   gem 'factory_girl', '4.2.0'
+  gem 'faker',		  '1.2.0'
 end
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
+
+# Experimental bootstrap 3.0 beta
+gem 'bootstrap-sass', github: 'thomas-mcdonald/bootstrap-sass' 
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
