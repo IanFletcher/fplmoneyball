@@ -1,0 +1,19 @@
+<h1>Players#index</h1>
+<p class="shortname">Find me in app/views/players/index.html.erb</p>
+
+<table id="playerlist" class="table table-striped table-bordered table-condensed" >
+	<tr class="flip">
+	  <th>Club</th>
+	  <th>Surname</th>
+	  <th>Bonus</th>
+	  <th>Price</th>
+	</tr>
+<%  @players.each do |p| %>
+	<tr class="flip">
+	  <td> <%= p.club_shortname %> </td>
+	  <td> <%= p.surname %> </td>
+	  <td> <%= p.bonus %> </td>
+	  <td> <%= p.price %> </td>
+	</tr>
+<% end %>
+</table>
