@@ -1,9 +1,6 @@
 class PlayersController < ApplicationController
   def index
-  	@players = Player.all
-  	respond_to do |format|
-  		format.html
-  		format.js
-  	end
+  	@players = Player.paginate(page: params[:page]).order('price DESC')
+
   end
 end
