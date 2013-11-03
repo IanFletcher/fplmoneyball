@@ -43,5 +43,6 @@ bonus = [0,0,0,0,0,0,0,0,0,0,1,1,1,2,3]
 	transfers_out_round:rand(20000), price_rise: rand(10).to_f/10+price_rise_round,
 	price_fall:(rand(10).to_f/10*-1)+price_fall_round, 
 	price_rise_round:price_rise_round, price_fall_round:price_fall_round,
-	club_shortname:shortclb)
+	club_shortname:shortclb, total_points:rand(40..200), 
+	total_income:rand(90..2000)/100.00, income:rand(1..12)/10.0)
 end

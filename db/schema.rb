@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131017115036) do
+ActiveRecord::Schema.define(version: 20131102064144) do
 
   create_table "players", force: true do |t|
     t.string   "surname",                limit: 30
@@ -53,6 +53,9 @@ ActiveRecord::Schema.define(version: 20131017115036) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "club_shortname",         limit: 3
+    t.integer  "total_points"
+    t.decimal  "total_income",                      precision: 4, scale: 2
+    t.decimal  "income",                            precision: 4, scale: 2
   end
 
 end
