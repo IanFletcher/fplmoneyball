@@ -1,5 +1,8 @@
 Fplmoneyball::Application.routes.draw do
-  get "players/index"
+  get "players/index" => 'players#index', as: 'playerslist'
+
+  match 'players/newsort', to: 'players#newsort', via: :get, as: 'playerssort'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -2,19 +2,30 @@ class Player < ActiveRecord::Base
 
 	self.per_page = 30
 
-  	PLAYERSORT =  {
-  	  "Total Score"=>         "totalscore", 
+  scope :teams, -> {select("club").group("club")}
+  scope :bandlevel, -> (band) {where('price <=?', band )}
+  def self.selectclub(club) 
+    case club
+      when 'All' then where('id >= ?', 0 )
+      when "Defenders","Goalies","Midfielders","Strikers"
+        where("position=?", club[0].downcase)
+      else where("club=?", club)
+    end
+  end
+
+  PLAYER_SORT =  {
+      "Total Points"=>        "total_points",
+      "Price"=>               "price",
   	  "Round Score"=>         "round_score",
-  	  "Price"=>               "price",
-  	  "Teams Selected by %"=> "teams_selected_percentage",
-  	  "Miniutes Played"=>     "miniutes_played",
+  	  "Teams Selected by"=>   "teams_selected_percent",
+  	  "Minutes Played"=>      "minutes_played",
   	  "Goals Scored"=>        "goals_scored",
   	  "Assists"=>             "assists",
   	  "Clean Sheets"=>        "clean_sheets",
   	  "Goals Conceded"=>      "goals_conceded",     
   	  "Own Goals"=>           "own_goals",
-  	  "Penalties Saved"=>     "penaltles_saved",
-  	  "Penalities Missed"=>   "penalties_missed",
+  	  "Penalties Saved"=>     "penalties_saved",
+  	  "Penalties Missed"=>    "penalties_missed",
   	  "Yellow Cards"=>        "yellow_cards",
   	  "Red Cards"=>           "red_cards",
   	  "Saves"=>               "saves",

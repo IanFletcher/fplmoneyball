@@ -5,6 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+PLAYERNUMBER = 300
+
 Player.delete_all
 
 puts "-- finish deletion --"
@@ -23,7 +25,7 @@ club = {"Arsenal" =>"ARS","Chelsea" =>"CHE","Manchester United" => "MU",
 score = [0,0,1,1,1,1,2,2,2,2,3,4,4,4,5,5,6,7,8]
 goals = [0,0,0,0,0,0,0,0,1,1,1,1,2,3,4,5,6,7]
 bonus = [0,0,0,0,0,0,0,0,0,0,1,1,1,2,3]
-100.times do 
+(PLAYERNUMBER).times do 
 	clb = ran(club).first
 	shortclb = club[clb]
 	psn = ran(position)
@@ -46,3 +48,5 @@ bonus = [0,0,0,0,0,0,0,0,0,0,1,1,1,2,3]
 	club_shortname:shortclb, total_points:rand(40..200), 
 	total_income:rand(90..2000)/100.00, income:rand(1..12)/10.0)
 end
+
+puts "-- Finshed adding #{PLAYERNUMBER} --"

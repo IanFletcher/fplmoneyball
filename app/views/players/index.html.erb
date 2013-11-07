@@ -1,31 +1,97 @@
-<h1>Players#index</h1>
-<p class="shortname">Find me in app/views/players/index.html.erb</p>
-
-<div class="playercontainer">
-<div id="playerselection">
+</br>
+<div class="playercontainer" data-url= "<%= playerssort_url %>">
+<%= form_tag playerslist_path, method: "get", id:"playerselection" do %>
+	<p id="transferheading">Player Market</p>
+	<%= label_tag('Team Profile:',nil,class:'label') %>
+	<%= select("team", :id, options_for_select(team_selection,team_filter), {}, html_options = {class: "form-control playerdropdown"}) %>
+	<%= label_tag('Sorting Options:',nil,class:'label') %>
+	<%= select( "playersort", :id, options_for_select( Player::PLAYER_SORT,  sort_column), options = {}, 
+	      html_options = {:class => "form-control playerdropdown"}) %>
+	<%= label_tag('Price Bands:',nil,class:'label') %>
+	<%= select("priceband", :id, options_for_select(price_bands, band), {}, html_options = {class: "form-control playerdropdown"}) %>	 
+	<%= submit_tag "Apply", id: "sortsubmit"%>
 	</br>
-	<%= label_tag('Sorting Options',nil,class:'label') %>
-	<%= select( "playersort", "sort", Player::PLAYERSORT, {}, id:"playersort", class: "form-control") %> 
-	</br>
-</div>
+<% end %>
 <table id="playerlist" class="table table-striped table-bordered table-condensed" >
     <thead>
 	    <tr class="playerdetails">
-		  <th>Club</th>
-		  <th>Pos</th>
-		  <th>Surname</th>
-		  <th>Bonus</th>
-		  <th>Price</th>
+		  <th class="short_name">Club</th>
+		  <th class="position">Pos</th>
+		  <th class="surname">Surname</th>
+
+		  <th class="round_score optional">Round Score</th>
+		  <th class="teams_selected_percent optional">Selected %</th>
+		  <th class="minutes_played optional">minutes</th>
+		  <th class="goals_scored optional">Goals Scored</th>
+		  <th class="assists optional">Assists</th>
+		  <th class="clean_sheets optional">Clean Sheets</th>
+		  <th class="own_goals optional">Own Goals</th>
+		  <th class="penalties_saved optional">Penalties Saved</th>
+		  <th class="penalties_missed optional">Penalties Missed</th>
+		  <th class="yellow_cards optional">Yellow Cards</th>
+		  <th class="red_cards optional">Red Cards</th>
+		  <th class="saves optional">Saves</th>
+		  <th class="round_bonus optional">Round Bonus</th>
+		  <th class="form optional">Form</th>
+		  <th class="dream_team_appearances optional">Dream Team</th>
+		  <th class="value_form optional">Value Form</th>
+		  <th class="value_season optional">Value Season</th>
+		  <th class="points_per_game optional">PPG</th>
+		  <th class="transfers_in optional">Trans In</th>
+		  <th class="transfers_out optional">Trans Out</th>
+		  <th class="transfers_in_round optional">Trans In Rnd</th>
+		  <th class="transfers_out_round optional">Trans Out Rnd</th>
+		  <th class="price_rise optional">Price Rise</th>
+		  <th class="price_fall optional">Price Fall</th>
+		  <th class="price_rise_round optional">Price Rise Rnd</th>
+		  <th class="price_fall_round optional">Price Fall Rnd</th>
+		  <th class="goals_conceded optional">Goals Conceded</th>
+
+		  <th class="bonus optional">Bonus</th>
+		  <th class="total_points optional">Total Pts</th>
+		  <th class="price optional">Price</th>
+		  <th class="price">Price</th>
 		</tr>
 	</thead>
 	<tbody>
-	<% @players.sort{|a,b| [a[:position], b[:price]] <=> 
-		 [b[:position], a[:price]]}.each do |p| %>
+	<% @players.sort{|a,b| [a[:position], b[sort_column]] <=> 
+		 [b[:position], a[sort_column]]}.each do |p| %>
 	<tr class="playerdetails" id= <%= "#{p.surname}_#{p.id}" %> >
-	  <td> <%= p.club_shortname %> </td>
+	  <td class="short_name"> <%= p.club_shortname %> </td>
 	  <td class="position"> <%= p.position %> </td>
-	  <td> <%= p.surname %> </td>
-	  <td> <%= p.bonus %> </td>
+	  <td class="surname"> <%= p.surname %> </td>
+
+	  <td class="round_score optional"> <%= p.round_score %> </td>
+	  <td class="teams_selected_percent optional"> <%= p.teams_selected_percent %> </td>
+	  <td class="minutes_played optional"> <%= p.minutes_played %> </td>
+	  <td class="goals_scored optional"> <%= p.goals_scored %> </td>
+	  <td class="assists optional"> <%= p.assists %> </td>
+	  <td class="clean_sheets optional"> <%= p.clean_sheets %> </td>
+	  <td class="own_goals optional"> <%= p.own_goals %> </td>
+	  <td class="penalties_saved optional"> <%= p.penalties_saved %> </td>
+	  <td class="penalties_missed optional"> <%= p.penalties_missed %> </td>
+	  <td class="yellow_cards optional"> <%= p.yellow_cards %> </td>
+	  <td class="red_cards optional"> <%= p.red_cards %> </td>
+	  <td class="saves optional"> <%= p.saves %> </td>
+	  <td class="round_bonus optional"> <%= p.round_bonus %> </td>
+	  <td class="form optional"> <%= p.form %> </td>
+	  <td class="dream_team_appearances optional"> <%= p.dream_team_appearances %> </td>
+	  <td class="value_form optional"> <%= p.value_form %> </td>
+	  <td class="value_season optional"> <%= p.value_season %> </td>
+	  <td class="points_per_game optional"> <%= p.points_per_game %> </td>
+	  <td class="transfers_in optional"> <%= p.transfers_in %> </td>
+	  <td class="transfers_out optional"> <%= p.transfers_out %> </td>
+	  <td class="transfers_in_round optional"> <%= p.transfers_in_round %> </td>
+	  <td class="transfers_out_round optional"> <%= p.transfers_out_round %> </td>
+	  <td class="price_rise optional"> <%= p.price_rise %> </td>
+	  <td class="price_fall optional"> <%= p.price_fall %> </td>
+	  <td class="price_rise_round optional"> <%= p.price_rise_round %> </td>
+	  <td class="price_fall_round optional"> <%= p.price_fall_round %> </td>
+	  <td class="goals_conceded optional"> <%= p.goals_conceded %> </td>
+
+	  <td class="bonus optional"> <%= p.bonus %> </td>
+	  <td class="total_points optional"> <%=p.total_points%> </td>
+	  <td class="price optional"> <%= p.price %> </td>
 	  <td class="price"> <%= p.price %> </td>
 	</tr>
 	<% end %>
