@@ -1,32 +1,24 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+# stuff
 
 ready = ->
-#    jQuery('#playersort_id').change ->
-#      $('#sortsubmit').click() 
- #     thesort =$(this).val()
- #     sort_url = jQuery('.playercontainer').data('url')
- #     alert(sort_url)  
- #     jQuery.ajax(
- #        url: sort_url
- #        type: 'get'
- #        data: sort: thesort
- #        datatype: 'script'
- #     )
- #     link_to sort_path(sort: thesort)
-
     jQuery('#sortsubmit').hide()
     jQuery('.playerdropdown').change ->
         jQuery('#sortsubmit').click()
 
+    jQuery("tbody .playerdetails").on('click', ->
+        selectedplayer =
+          id: $(this).attr('id').trim()
+          surname: $(".surname",this).text().trim()
+          club_shortname: $(".club_shortname",this).text().trim()
+          position: $(".position",this).text().trim()
+        groundplacement(selectedplayer))
+
     insertpositionbuttons()
     arrangevisibility()
 
-
-
 $(document).ready(ready)
 $(document).on('page:load', ready)
+$(document).on('ajaxComplete', ready)
 
 positionmarker = (obj, position) ->
   $(obj).parent().before("<tr><td class='"+position+"' colspan='5'>
@@ -56,8 +48,85 @@ insertpositionbuttons =->
               positionmarker(elem, "Goalies")
             when "d" 
               positionmarker(elem, "Defenders")
-            else
+            when "s"
               positionmarker(elem, "Strikers")
 
         prev = curr
       )
+
+groundplacement =(selectedplayer)->
+  x = 138 * shirtslide[selectedplayer.club_shortname].x
+  y = 162 * shirtslide[selectedplayer.club_shortname].y
+#  $("#g1 div").remove()
+  spot = $(".placeholder[id ^=  " + selectedplayer.position + "]").not(".active").first()
+  if $(spot).length
+    $(spot).append("<div class='club_box'></div>")
+    $(" .club_box" , spot).append("<div class='club_shirts'></div>")
+    $(" .club_box .club_shirts", spot).prepend('<img src="/assets/clubshirts.png" />')
+    $(" .club_box .club_shirts", spot).css({left: "-"+x+"px", top: "-"+y+"px"})
+    $(" .club_box", spot).after("<h4 class='text-center'>" + selectedplayer.surname + "</h4>")
+    $(spot).addClass('active')
+  else
+    alert('No valid spaces left')
+
+shirtslide =
+  ARS:
+    x:0
+    y:0
+  CAR:
+    x:1
+    y:0
+  LIV:
+    x:2
+    y:0
+  SWA:
+    x:3
+    y:0
+  STH:
+    x:4
+    y:0
+  STK:
+    x:0
+    y:1
+  FUL:
+    x:1
+    y:1
+  MCI:
+    x:2
+    y:1
+  HUL:
+    x:3
+    y:1
+  NEW:
+    x:4
+    y:1
+  EVE:
+    x:0
+    y:2
+  TOT:
+    x:1
+    y:2
+  CHE:
+    x:2
+    y:2
+  WBA:
+    x:3
+    y:2
+  WHM:
+    x:4
+    y:2
+  MU:
+    x:0
+    y:3
+  AST:
+    x:1
+    y:3
+  NOR:
+    x:2
+    y:3
+  SUN:
+    x:3
+    y:3
+  CPA:
+    x:4
+    y:3

@@ -6,7 +6,7 @@ class Player < ActiveRecord::Base
   scope :bandlevel, -> (band) {where('price <=?', band )}
   def self.selectclub(club) 
     case club
-      when 'All' then where('id >= ?', 0 )
+      when 'All' then all
       when "Defenders","Goalies","Midfielders","Strikers"
         where("position=?", club[0].downcase)
       else where("club=?", club)

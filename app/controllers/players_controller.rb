@@ -1,11 +1,17 @@
 class PlayersController < ApplicationController
   helper_method :sort_column, :team_selection, :price_bands, :team_filter, :band
   def index
+    logger.debug "BEFORE index params #{params}"
+ 
   	@players = Player.selectclub(team_filter).bandlevel(band).paginate(page: params[:page]).order(sort_column + ' DESC')
   	logger.debug "in index params #{params}"
-    @teams = Player.teams.map{|x| x.club}
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
-  
+ 
+
   private
   def sort_column
     if defined?(params[:playersort][:id])
