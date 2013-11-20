@@ -1,6 +1,6 @@
 class PlayersController < ApplicationController
   helper_method :sort_column, :team_selection, :price_bands, :team_filter, :band
-  def index
+  def playerslist
     logger.debug "BEFORE index params #{params}"
  
   	@players = Player.selectclub(team_filter).bandlevel(band).paginate(page: params[:page]).order(sort_column + ' DESC')

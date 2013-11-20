@@ -89,17 +89,33 @@
 	background-image:image-url("grass.jpg");
 	background-repeat:repeat;
 };
+
 .club_box
 {
-position:relative;
-width:138px;
-height:150px;
-overflow:hidden;
-z-index:3;
+	position:relative;
+	width:100px;
+	height:98px;
+	overflow:hidden;
+	z-index:3;
 };
 .club_shirts
 {
-position:absolute;
-overflow:hidden;
-z-index:2;
+	position:absolute;
+	overflow:hidden;
+	z-index:2;
 };
+
+h4.makewhite
+{
+	color:ivory;
+	font-weight:900;
+};
+
+.playerblk
+{
+	display:inline-block;
+};
+.container
+{
+	width: 970px;
+}

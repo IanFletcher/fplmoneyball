@@ -13,6 +13,9 @@ ready = ->
           position: $(".position",this).text().trim()
         groundplacement(selectedplayer))
 
+    $("#footballground").delegate('.cross', 'click', -> 
+        $(this).parent().removeClass('active').children().remove())
+
     insertpositionbuttons()
     arrangevisibility()
 
@@ -55,8 +58,8 @@ insertpositionbuttons =->
       )
 
 groundplacement =(selectedplayer)->
-  x = 138 * shirtslide[selectedplayer.club_shortname].x
-  y = 162 * shirtslide[selectedplayer.club_shortname].y
+  x = 100 * shirtslide[selectedplayer.club_shortname].x
+  y = 110 * shirtslide[selectedplayer.club_shortname].y
 #  $("#g1 div").remove()
   spot = $(".placeholder[id ^=  " + selectedplayer.position + "]").not(".active").first()
   if $(spot).length
@@ -64,7 +67,8 @@ groundplacement =(selectedplayer)->
     $(" .club_box" , spot).append("<div class='club_shirts'></div>")
     $(" .club_box .club_shirts", spot).prepend('<img src="/assets/clubshirts.png" />')
     $(" .club_box .club_shirts", spot).css({left: "-"+x+"px", top: "-"+y+"px"})
-    $(" .club_box", spot).after("<h4 class='text-center'>" + selectedplayer.surname + "</h4>")
+    $(" .club_box", spot).after("<h4 class='playerblk makewhite'>" + selectedplayer.surname + "</h4>")
+    $(" .club_box", spot).after('<img class="playerblk cross" src="/assets/smallx.png" />')
     $(spot).addClass('active')
   else
     alert('No valid spaces left')

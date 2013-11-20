@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131102064144) do
+ActiveRecord::Schema.define(version: 20131119043947) do
 
   create_table "players", force: true do |t|
     t.string   "surname",                limit: 30
@@ -56,6 +56,33 @@ ActiveRecord::Schema.define(version: 20131102064144) do
     t.integer  "total_points"
     t.decimal  "total_income",                      precision: 4, scale: 2
     t.decimal  "income",                            precision: 4, scale: 2
+  end
+
+  create_table "team_players", force: true do |t|
+    t.string   "placement",            limit: 2
+    t.decimal  "buy_price",                      precision: 3, scale: 1
+    t.integer  "buy_gameweek"
+    t.datetime "buy_date"
+    t.decimal  "sell_price",                     precision: 3, scale: 1
+    t.integer  "deactivated_gameweek"
+    t.datetime "sell_date"
+    t.decimal  "loyalty_bonus",                  precision: 4, scale: 2
+    t.decimal  "income",                         precision: 4, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "player_id"
+    t.integer  "team_id"
+  end
+
+  add_index "team_players", ["player_id"], name: "index_team_players_on_player_id"
+  add_index "team_players", ["team_id"], name: "index_team_players_on_team_id"
+
+  create_table "teams", force: true do |t|
+    t.string   "name",               limit: 30
+    t.decimal  "cash",                          precision: 3, scale: 1
+    t.integer  "activated_gameweek",                                    default: 1
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

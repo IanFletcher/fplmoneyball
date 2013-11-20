@@ -50,3 +50,10 @@ bonus = [0,0,0,0,0,0,0,0,0,0,1,1,1,2,3]
 end
 
 puts "-- Finshed adding #{PLAYERNUMBER} --"
+
+Team.delete_all
+
+Team.create(name: 'toecutters', cash:100.00, activated_gameweek: 1)
+
+teams = Team.all
+puts "-- Finshed adding Teams #{teams.length}--"

@@ -1,4 +1,5 @@
 class Player < ActiveRecord::Base
+  has_many :teamplayers
 
 	self.per_page = 30
 
