@@ -30,5 +30,10 @@ describe 'Player Market' do
 			find(:xpath, ".//*[@id='pagfixed2']/a[3]").click
 			has_content?(names)
 		end
+
+		it 'has new personel markers'
+			# 15 new positions
+
+		end
 	end
 end

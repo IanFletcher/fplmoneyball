@@ -77,8 +77,8 @@
 
 	  <td class="bonus optional"> <%= p.bonus %> </td>
 	  <td class="total_points optional"> <%=p.total_points%> </td>
-	  <td class="price optional"> <%= p.price %> </td>
-	  <td class="price"> <%= p.price %> </td>
+	  <td class="price optional"> <%= number_with_precision(p.price, precision:1) %> </td>
+	  <td class="price"> <%= number_with_precision(p.price,precision:1) %> </td>
 	</tr>
 	<% end %>
 	</tbody>

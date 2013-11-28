@@ -5,6 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
 PLAYERNUMBER = 300
 
 Player.delete_all
@@ -25,15 +26,17 @@ club = {"Arsenal" =>"ARS","Chelsea" =>"CHE","Manchester United" => "MU",
 score = [0,0,1,1,1,1,2,2,2,2,3,4,4,4,5,5,6,7,8]
 goals = [0,0,0,0,0,0,0,0,1,1,1,1,2,3,4,5,6,7]
 bonus = [0,0,0,0,0,0,0,0,0,0,1,1,1,2,3]
+
 (PLAYERNUMBER).times do 
 	clb = ran(club).first
 	shortclb = club[clb]
 	psn = ran(position)
 	svs=psn=="g"?ran(goals):0
 	price_rise_round = ran(bonus).to_f/10
+	newprice = rand((40..100))/10.0.round(1)
 	price_fall_round = price_rise_round == 0 ? ran(bonus).to_f/10 * -1 : 0
 	Player.create(surname: Faker::Name.last_name, firstname: Faker::Name.first_name,
-	position:psn, club: clb, round_score:ran(score),price:rand(40..100)/10,
+	position:psn, club: clb, round_score:ran(score),price:newprice,
 	teams_selected_percent:rand(3..99), minutes_played:rand(50..2000),goals_scored:ran(goals),
 	assists:ran(goals),clean_sheets:rand(10),goals_conceded:rand(15),
 	own_goals:ran(goals),penalties_saved:ran(goals),penalties_missed:ran(goals),

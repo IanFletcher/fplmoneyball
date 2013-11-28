@@ -11,28 +11,38 @@
 		<tr>
 		<td  id="footballground">
 			<div class='container'>
+				<div class='row'>
+					<div id="teamtally" class="col-xs-3 pull-right label label-info"> Cash : $100.00</div>
+				</div>
 			   <div class='row'>
 			   	   <div class= "col-lg-4"></div>
 				   <div id="g1" class= "col-xs-2 placeholder"></div>
 				   <div id="g2" class= "col-xs-2 placeholder"></div>
 			   </div>
 			   <div class='row'>
-				   <div id="d1" class= "col-xs-3 placeholder"></div>
-				   <div id="d2" class= "col-xs-3 placeholder"></div>
-				   <div id="d3" class= "col-xs-3 placeholder"></div>
-				   <div id="d4" class= "col-xs-3 placeholder"></div>
+			   	   <div class= "col-lg-1"></div>
+				   <div id="d1" class= "col-xs-2 placeholder"></div>
+				   <div id="d2" class= "col-xs-2 placeholder"></div>
+				   <div id="d3" class= "col-xs-2 placeholder"></div>
+				   <div id="d4" class= "col-xs-2 placeholder"></div>
+				   <div id="d5" class= "col-xs-2 placeholder"></div>
 			   </div>
 			   <div class='row'>
-				   <div id="m1" class= "col-xs-3 placeholder"></div>
-				   <div id="m2" class= "col-xs-3 placeholder"></div>
-				   <div id="m3" class= "col-xs-3 placeholder"></div>
-				   <div id="m4" class= "col-xs-3 placeholder"></div>
+			   	   <div class= "col-lg-1"></div>
+				   <div id="m1" class= "col-xs-2 placeholder"></div>
+				   <div id="m2" class= "col-xs-2 placeholder"></div>
+				   <div id="m3" class= "col-xs-2 placeholder"></div>
+				   <div id="m4" class= "col-xs-2 placeholder"></div>
+				   <div id="m5" class= "col-xs-2 placeholder"></div>
 			   </div>
 			   <div class='row'>
 			   		<div class="col-lg-3"></div>
 				   <div id="s1" class= "col-xs-2 placeholder"></div>
 				   <div id="s2" class= "col-xs-2 placeholder"></div>
 				   <div id="s3" class= "col-xs-2 placeholder"></div>
+			   </div>
+			   <div>
+			   		<div id="team_personel"><%= render 'teampersonel', team_personel:@team_personel %></div>
 			   </div>
 			</div>
 		</td>
@@ -48,7 +58,7 @@
 			      html_options = {:class => "form-control playerdropdown"}) %>
 			<%= label_tag('Price Bands:',nil,class:'label') %>
 			<%= select("priceband", :id, options_for_select(price_bands, band), {}, html_options = {class: "form-control playerdropdown"}) %>	 
-			<%= submit_tag "Apply", id: "sortsubmit"%>
+			<%= submit_tag "Apply", id: "sortsubmit", class:'submitbutton' %>
 			</br>
 		</div>
 		<div id="playermarket"><%= render 'playermarket', players:@players %></div>

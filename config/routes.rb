@@ -1,6 +1,8 @@
 Fplmoneyball::Application.routes.draw do
  get "players/playerslist" => 'players#playerslist', as: 'playerslist'
 
+ put "players/playerslist" => 'teamplayers#teampersonel', as: 'teampersonel' 
+
   #resources :players do
   #  collection do
   #     get "players/playerslist" => 'players#index', as: 'playerslist'

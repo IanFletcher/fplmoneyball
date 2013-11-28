@@ -1,6 +1,12 @@
 // Place all the styles related to the players controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.submitbutton
+{
+	display:none;
+};
+
 #playerlist
 {
 	width:300px;
@@ -21,7 +27,7 @@
 	};
 };
 
-#pagfixed
+#pagfixed, #pagfixed2
 {
 	padding-right:0px;
 	padding-bottom:0px;
@@ -90,6 +96,11 @@
 	background-repeat:repeat;
 };
 
+#teamtally
+{
+	font-size:20px;
+};
+
 .club_box
 {
 	position:relative;
@@ -109,13 +120,17 @@ h4.makewhite
 {
 	color:ivory;
 	font-weight:900;
+	padding-bottom:-40px;
+	border-bottom:-40px;
+	margin-bottom:-40px;
 };
 
 .playerblk
 {
 	display:inline-block;
+	background:grey;
 };
 .container
 {
 	width: 970px;
-}
+};

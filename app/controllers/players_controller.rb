@@ -4,13 +4,13 @@ class PlayersController < ApplicationController
     logger.debug "BEFORE index params #{params}"
  
   	@players = Player.selectclub(team_filter).bandlevel(band).paginate(page: params[:page]).order(sort_column + ' DESC')
+    @team_personel = team_builder
   	logger.debug "in index params #{params}"
     respond_to do |format|
       format.html
       format.js
     end
   end
- 
 
   private
   def sort_column
@@ -41,4 +41,12 @@ class PlayersController < ApplicationController
   def band
       defined?(params[:priceband][:id]) ? params[:priceband][:id] : price_bands[0]
   end  
+
+  def team_builder
+    personel = []
+    TeamPlayer::POSITIONPLACES.each do |pos|
+      personel << TeamPlayer.new(placement:pos, team_id:1)
+    end
+    personel
+  end
 end
