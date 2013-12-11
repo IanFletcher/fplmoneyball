@@ -4,8 +4,9 @@ class PlayersController < ApplicationController
     logger.debug "BEFORE index params #{params}"
  
   	@players = Player.selectclub(team_filter).bandlevel(band).paginate(page: params[:page]).order(sort_column + ' DESC')
-    @team_personel = team_builder
-  	logger.debug "in index params #{params}"
+    @team = Team.find(2)
+    
+    logger.debug "in index params #{params}"
     respond_to do |format|
       format.html
       format.js
@@ -21,7 +22,7 @@ class PlayersController < ApplicationController
     end  
   end
   def team_selection
-    @team || ["All", "Goalies", "Defenders", "Midfielders", "Strikers"] + (Player.teams.map{|x| x.club})
+    @clubmakup || ["All", "Goalies", "Defenders", "Midfielders", "Strikers"] + (Player.teams.map{|x| x.club})
   end
   def price_bands
     if defined? @bands
@@ -36,7 +37,7 @@ class PlayersController < ApplicationController
     end
   end
   def team_filter
-      defined?(params[:team][:id]) ? params[:team][:id] : "All"
+      defined?(params[:teamselect][:id]) ? params[:teamselect][:id] : "All"
   end
   def band
       defined?(params[:priceband][:id]) ? params[:priceband][:id] : price_bands[0]

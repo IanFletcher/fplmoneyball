@@ -1,5 +1,5 @@
 class Player < ActiveRecord::Base
-  has_many :teamplayers
+  has_many :team_players, inverse_of: :player
 
 	self.per_page = 30
 

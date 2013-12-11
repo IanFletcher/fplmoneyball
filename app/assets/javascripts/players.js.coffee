@@ -11,18 +11,24 @@ ready = ->
           club_shortname: $(".club_shortname",this).text().trim()
           price: $(".price",this).last().text().trim()
           position: $(".position",this).text().trim()
-        groundplacement(selectedplayer))
+          squad: 'New'
+          placement: null
+        selectedplayer.placement = groundplacement(selectedplayer).trim()
+        if selectedplayer.placement
+          amount = parseFloat(selectedplayer.price) * -1
+          teamtally(amount)
+          addteammate(selectedplayer)
+        )
+
 
     $("#footballground").delegate('.cross', 'click', -> 
-      #  price = $(this).parent().children('.pprice').text()
+        price = $(this).parent().children('.pprice').text()
         selectedpos = $(this).parent().attr('id').trim()
-        price = $("." + selectedpos + ".buy_price").val()
-        $("." + selectedpos + ".player_id").val("")
-        $("." + selectedpos + ".buy_price").val("")
-
         teamtally(price)
+        $("#newplayers .placement[value= '" + selectedpos + "']").parent().remove()
         $(this).parent().removeClass('active').children().remove())
 
+    teamvalue()
     insertpositionbuttons()
     arrangevisibility()
     $('#personel').on('click', validateform)
@@ -31,18 +37,44 @@ $(document).ready(ready)
 $(document).on('page:load', ready)
 $(document).on('ajaxComplete', ready)
 
+readynoajax = ->
+    $('#team').on 'click', '.add_fields', (event) ->
+        time = new Date().getTime()
+        regexp = new RegExp($(this).data('id'), 'g')
+        $(this).before($(this).data('fields').replace(regexp, time))
+        event.preventDefault()
+
+    assemblecurrentteam()
+
+
+$(document).ready(readynoajax)
+$(document).on('page:load', readynoajax)
+
+assemblecurrentteam =->
+  $('#hidepersonel>.newplayer').each (ind)->
+    selectedplayer =
+      id: $(this).children('.player_id').val().trim()
+      placement: $(this).children('.placement').val().trim()
+      price: $(this).children('.buy_price').val().trim()
+      position:$(this).children('.position').val().trim()
+      surname:$(this).children('.surname').val().trim()
+      club_shortname: $(this).children('.club_shortname').val().trim()
+      squad:'Original'
+    groundplacement(selectedplayer)
+
+teamvalue =->
+  $('#teamtally').text("Cash : $" + $('#team_cash').val())
+
 positionmarker = (obj, position) ->
   $(obj).parent().before("<tr><td class='"+position+"' colspan='5'>
     <button type='button' class='btn btn-info col-md-12 "+position+"'>"+position+"</button></td></tr>")
   $("." + position + ">button").click ->
-    jQuery("#team_id").val(position).change()
-
+    jQuery("#teamselect_id").val(position).change()
 
 arrangevisibility =->
    jQuery(".optional").hide()
    visclass = jQuery('#playersort_id :selected').val()
    jQuery("." + visclass + ".optional").show() 
-
 
 insertpositionbuttons =->
     arr = ['Goalies','Defenders','Midfielders','Strikers']
@@ -68,7 +100,11 @@ insertpositionbuttons =->
 groundplacement =(selectedplayer)->
   x = 100 * shirtslide[selectedplayer.club_shortname].x
   y = 110 * shirtslide[selectedplayer.club_shortname].y
-  spot = $(".placeholder[id ^=  " + selectedplayer.position + "]").not(".active").first()
+  if (selectedplayer.placement?)
+    spot = $(".placeholder[id = " + selectedplayer.placement + "]")
+  else
+    spot = $(".placeholder[id ^=  " + selectedplayer.position + "]").not(".active").first()
+
   if $(spot).length
     $(spot).append("<div class='club_box'></div>")
     $(" .club_box" , spot).append("<div class='club_shirts'></div>")
@@ -78,21 +114,22 @@ groundplacement =(selectedplayer)->
     $(" .club_box", spot).after("<h4 class='playerblk makewhite' style='margin-left:7px'>" + selectedplayer.surname + "</h4>")
     $(" .club_box", spot).after('<img class="playerblk cross" src="/assets/smallx.png" />')
     $(spot).addClass('active')
-
-    selectedpos = $(spot).attr('id').trim()
-    $("." + selectedpos + ".player_id").val(selectedplayer.id)
-    $("." + selectedpos + ".buy_price").val(selectedplayer.price)
-
-
-    amount = parseFloat(selectedplayer.price) * -1
-    teamtally(amount)
+    spot.attr('id')
   else
     alert('No valid spaces left')
+    false
+
+addteammate=(newplayer)->
+  $('.add_fields').click()
+  $('#hidepersonel .player_id').last().val(newplayer.id)
+  $('#hidepersonel .placement').last().val(newplayer.placement)
+  $('#hidepersonel .buy_price').last().val(newplayer.price)
 
 teamtally =(amount)->
-    teamcash=  $('#teamtally').text().match(/[\-\d\.]+/g)
+    teamcash=  $('#team_cash').val()
     teamamount = (parseFloat(teamcash) + parseFloat(amount)).toFixed(2)
-    $('#teamtally').text("Cash : $" + teamamount)
+    $('#team_cash').val(teamamount)
+    teamvalue()
     $('#teamtally').removeClass('label-info').addClass('label-danger') if teamamount < 0.00
 
 validateform =() ->
