@@ -21,7 +21,7 @@ ready = ->
         )
 
 
-    $("#footballground").delegate('.cross', 'click', -> 
+    $("#footballground").undelegate().delegate('.cross', 'click', -> 
         price = $(this).parent().children('.pprice').text()
         selectedpos = $(this).parent().attr('id').trim()
         teamtally(price)
@@ -201,7 +201,7 @@ shirtslide =
   MU:
     x:0
     y:3
-  AST:
+  AVL:
     x:1
     y:3
   NOR:

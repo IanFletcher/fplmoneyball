@@ -1,5 +1,13 @@
 require 'spec_helper'
 
+module SquadView
+	def squad(arr)
+		squadplayer = Struct.new(:surname, :placement)
+		arr.collect {|p| squadplayer.new(p[0],p[1])}
+	end
+end
+include SquadView
+
 describe 'Player Market' do 
 
 	subject {page}
@@ -12,7 +20,7 @@ describe 'Player Market' do
 
 		it {should have_title(/Player Market/)}
 		specify 'team profile produces correct players' do
-			select "Arsenal", from: 'team_id'
+			select "Arsenal", from: 'teamselect_id'
 			names = Player.where(club: 'Arsenal').order("price DESC").limit(30).pluck(:surname).join(' ')
 			has_content?(names)
 		end
@@ -31,9 +39,83 @@ describe 'Player Market' do
 			has_content?(names)
 		end
 
-		it 'has new personel markers'
-			# 15 new positions
-
+		it 'the current squad is displayed on the football ground' do
+			squadplayers = squad(Team.find_by(name: "SydneySting").team_players.joins(:player).pluck(:surname, :placement))
+			squadplayers.each do |ply|
+				within(:css,  "##{ply.placement}") do
+					has_content?(ply.surname)
+				end
+			end
+		end
+		it 'the squad has 15 players on football ground' do
+			should have_css("#footballground .placement", :count => 15)
+		end
+		describe 'using transfers', js: true do
+			it 'remove second goalie from squad members' do
+				find(:css, "#g2>.cross").click
+				should_not have_css("#g2 img")
+			end
+			it 'change to a different player on football ground' do
+				teamgoalies = []
+				teamgoalies << find(:xpath, ".//*[@id='g1']/h4[1]").text
+				teamgoalies << find(:xpath, ".//*[@id='g2']/h4[1]").text
+				click_button('Goalies')
+				sleep(1)
+				surname = ''
+				all("tbody>.playerdetails>.surname").each do |ply|
+					if !teamgoalies.include?(ply.text) 
+						surname =ply.text
+						break
+					end
+				end
+#				find(".playerdetails>.surname", text: surname).find(:xpath, "..")[:id]
+				find(:css, "#g2>.cross").click
+				find(:css, "tbody>.playerdetails>.surname", text: surname).click
+				should have_css("#g2", text: surname)
+			end
+			it 'changes the team cash when swapping a player' do
+				cash =find("#team_cash", :visible => false).value
+				credit = find("#g2> .pprice").text
+				teamgoalies = []
+				teamgoalies << find(:xpath, ".//*[@id='g1']/h4[1]").text
+				teamgoalies << find(:xpath, ".//*[@id='g2']/h4[1]").text
+				click_button('Goalies')
+				sleep(1)
+				surname = ''
+				all("tbody>.playerdetails>.surname").each do |ply|
+					if !teamgoalies.include?(ply.text) 
+						surname =ply.text
+						break
+					end
+				end
+				find("#g2 .cross").click
+				id = find(:css, "tbody>.playerdetails>.surname", text: surname).find(:xpath, "..")[:id]
+				debit = find_by_id(id).find(".visprice").text
+				find_by_id(id).click
+				cash = (cash.to_f + credit.to_f - debit.to_f).to_s
+				newtally = find('#team_cash', visible: false).value
+				expect(newtally.to_f).to eq(cash.to_f)
+			end
+			it 'swapping players and hit update team brings new players in the team' do
+				teamgoalies = []
+				teamgoalies << find(:xpath, ".//*[@id='g1']/h4[1]").text
+				teamgoalies << find(:xpath, ".//*[@id='g2']/h4[1]").text
+				click_button('Goalies')
+				sleep(1)
+				surname = ''
+				all("tbody>.playerdetails>.surname").each do |ply|
+					if !teamgoalies.include?(ply.text) 
+						surname =ply.text
+						break
+					end
+				end
+				find("#g2 .cross").click
+				player_id = find(:css, "tbody>.playerdetails>.surname", text: surname).find(:xpath, "..")[:id]
+				find_by_id(player_id).click
+				click_button('personel')
+				squadplayer = Team.find_by(name: "SydneySting").team_players.find_by(player_id: player_id)
+				expect(squadplayer.present?).to be_true
+			end
 		end
 	end
 end

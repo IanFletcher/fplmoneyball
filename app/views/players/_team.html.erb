@@ -1,0 +1,10 @@
+<%= f.hidden_field :name %>
+<%= f.hidden_field :cash %>
+<div id= 'hidepersonel'>
+	<%= f.fields_for :team_players , id: 'personelform' do |builder| %>
+		<%= render 'team_player_fields' , {tp: builder}  %>
+	<% end %>
+	<div id = 'newplayers'>
+		<%= link_to_add_fields "Add players", f, :team_players %>
+	</div>
+</div>

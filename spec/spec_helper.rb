@@ -12,6 +12,7 @@ Spork.prefork do
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
   require 'rspec/autorun'
+#  require 'database_cleaner'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
@@ -37,6 +38,15 @@ Spork.prefork do
     # examples within a transaction, remove the following line or assign false
     # instead of true.
     config.use_transactional_fixtures = true
+    # config.before(:suite) do
+    #   DatabaseCleaner.strategy = :truncation
+    # end
+    # config.before(:each) do
+    #   DatabaseCleaner.start
+    # end
+    # config.after(:each) do
+    #   DatabaseCleaner.clean
+    # end
 
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of
@@ -51,11 +61,32 @@ Spork.prefork do
     config.include FactoryGirl::Syntax::Methods
 
     config.include Capybara::DSL
+
+    class ActiveRecord::Base
+      mattr_accessor :shared_connection
+      @@shared_connection = nil
+
+      def self.connection
+        @@shared_connection || retrieve_connection
+      end
+    end
+
+    ##force threads to share same connection
+    ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
   end
 end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
+    class ActiveRecord::Base
+      mattr_accessor :shared_connection
+      @@shared_connection = nil
+
+      def self.connection
+        @@shared_connection || retrieve_connection
+      end
+    end
+    ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
 
 end
 

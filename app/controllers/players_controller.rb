@@ -4,7 +4,7 @@ class PlayersController < ApplicationController
     logger.debug "BEFORE index params #{params}"
  
   	@players = Player.selectclub(team_filter).bandlevel(band).paginate(page: params[:page]).order(sort_column + ' DESC')
-    @team = Team.find(2)
+    @team = Team.find_by(name: "SydneySting")
     
     logger.debug "in index params #{params}"
     respond_to do |format|

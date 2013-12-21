@@ -55,8 +55,31 @@ end
 puts "-- Finshed adding #{PLAYERNUMBER} --"
 
 Team.delete_all
+TeamPlayer.unscoped.delete_all
 
-Team.create(name: 'toecutters', cash:100.00, activated_gameweek: 1)
+puts "*** delete all teams"
+
+Team.create(name: 'Toecutters', cash:100.00, activated_gameweek: 1)
+Team.create(name: 'SydneySting', cash:10.00, activated_gameweek: 1)
+Team.create(name: 'Mins Giants', cash:100.00, activated_gameweek: 1)
+
+puts "-- Create a team for SydneySting --"
+def addplayers(tm , squad)
+	squad.each_with_index do |ply, i|
+		plc = i + 1
+		tm.team_players.build(player_id: squad[i].id, 
+			buy_price: squad[i].price, buy_gameweek: 1, 
+			buy_date: DateTime.now, placement: "#{squad[i].position}#{plc}")
+			.save(validate: false)
+	end
+end
+
+
+t = Team.find_by(name: 'SydneySting')
+addplayers(t, Player.where(position:'g').limit(2))
+addplayers(t, Player.where(position:'d').limit(5))
+addplayers(t, Player.where(position:'m').limit(5))
+addplayers(t, Player.where(position:'s').limit(3))
 
 teams = Team.all
 puts "-- Finshed adding Teams #{teams.length}--"
