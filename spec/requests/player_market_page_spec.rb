@@ -51,43 +51,36 @@ describe 'Player Market' do
 			should have_css("#footballground .placement", :count => 15)
 		end
 		describe 'using transfers', js: true do
+			def goalie_surname
+				teamgoalies = []
+				teamgoalies << find(:xpath, ".//*[@id='g1']/h4[1]").text
+				teamgoalies << find(:xpath, ".//*[@id='g2']/h4[1]").text
+				click_button('Goalies')
+				sleep(1)
+				surname = ''
+				all("tbody>.playerdetails>.surname").each do |ply|
+					if !teamgoalies.include?(ply.text) 
+						surname =ply.text
+						break
+					end
+				end
+				surname
+			end
+
 			it 'remove second goalie from squad members' do
 				find(:css, "#g2>.cross").click
 				should_not have_css("#g2 img")
 			end
 			it 'change to a different player on football ground' do
-				teamgoalies = []
-				teamgoalies << find(:xpath, ".//*[@id='g1']/h4[1]").text
-				teamgoalies << find(:xpath, ".//*[@id='g2']/h4[1]").text
-				click_button('Goalies')
-				sleep(1)
-				surname = ''
-				all("tbody>.playerdetails>.surname").each do |ply|
-					if !teamgoalies.include?(ply.text) 
-						surname =ply.text
-						break
-					end
-				end
-#				find(".playerdetails>.surname", text: surname).find(:xpath, "..")[:id]
+				surname = goalie_surname
 				find(:css, "#g2>.cross").click
 				find(:css, "tbody>.playerdetails>.surname", text: surname).click
 				should have_css("#g2", text: surname)
 			end
 			it 'changes the team cash when swapping a player' do
+				surname = goalie_surname
 				cash =find("#team_cash", :visible => false).value
 				credit = find("#g2> .pprice").text
-				teamgoalies = []
-				teamgoalies << find(:xpath, ".//*[@id='g1']/h4[1]").text
-				teamgoalies << find(:xpath, ".//*[@id='g2']/h4[1]").text
-				click_button('Goalies')
-				sleep(1)
-				surname = ''
-				all("tbody>.playerdetails>.surname").each do |ply|
-					if !teamgoalies.include?(ply.text) 
-						surname =ply.text
-						break
-					end
-				end
 				find("#g2 .cross").click
 				id = find(:css, "tbody>.playerdetails>.surname", text: surname).find(:xpath, "..")[:id]
 				debit = find_by_id(id).find(".visprice").text
@@ -97,18 +90,7 @@ describe 'Player Market' do
 				expect(newtally.to_f).to eq(cash.to_f)
 			end
 			it 'swapping players and hit update team brings new players in the team' do
-				teamgoalies = []
-				teamgoalies << find(:xpath, ".//*[@id='g1']/h4[1]").text
-				teamgoalies << find(:xpath, ".//*[@id='g2']/h4[1]").text
-				click_button('Goalies')
-				sleep(1)
-				surname = ''
-				all("tbody>.playerdetails>.surname").each do |ply|
-					if !teamgoalies.include?(ply.text) 
-						surname =ply.text
-						break
-					end
-				end
+				surname = goalie_surname
 				find("#g2 .cross").click
 				player_id = find(:css, "tbody>.playerdetails>.surname", text: surname).find(:xpath, "..")[:id]
 				find_by_id(player_id).click
