@@ -1,16 +1,16 @@
 class PlayersController < ApplicationController
+  before_filter :auth_user
+
   helper_method :sort_column, :team_selection, :price_bands, :team_filter, :band
   def playerslist
     logger.debug "BEFORE index params #{params}"
  
   	@players = Player.selectclub(team_filter).bandlevel(band).paginate(page: params[:page]).order(sort_column + ' DESC')
-    @team = Team.find_by(name: "SydneySting")
-    
-    logger.debug "in index params #{params}"
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    @team = Team.find_by(user_id: current_user.id)
+     respond_to do |format|
+       format.html
+       format.js
+     end
   end
 
   private
@@ -49,5 +49,9 @@ class PlayersController < ApplicationController
       personel << TeamPlayer.new(placement:pos, team_id:1)
     end
     personel
+  end
+
+  def auth_user
+    redirect_to user_session_url unless user_signed_in?
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140106070722) do
+ActiveRecord::Schema.define(version: 20140109033513) do
 
   create_table "players", force: true do |t|
     t.string   "surname",                limit: 30
@@ -83,7 +83,10 @@ ActiveRecord::Schema.define(version: 20140106070722) do
     t.integer  "activated_gameweek",                                    default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
+
+  add_index "teams", ["user_id"], name: "index_teams_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                             default: "", null: false

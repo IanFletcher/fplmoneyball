@@ -8,11 +8,11 @@
 </head>
 <body>
 	<div>
-	  <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
 	  <% flash.each do |name, msg| %>
-	  	<%= content_tag :div, msg, id: "flash_#{name}" %>
+	  	<%= content_tag :div, msg, id: "flash_#{name}", class: 
+	  	  ("#{name}" == "notice" ? "alert alert-success" : "alert alert-danger")%>
 	  <% end %>
+	  <%= link_to "Sign out",destroy_user_session_path,:method => :delete %>
 	  <%= yield %>
 	  <%= debug(params) if Rails.env.development? %>
 	</div>

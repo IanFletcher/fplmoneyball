@@ -3,12 +3,17 @@ class Team < ActiveRecord::Base
 	has_many :players, through: :team_players
 	accepts_nested_attributes_for :team_players, allow_destroy: true
 
+	belongs_to :user
+
 	validates :name, presence: true
 	validates :cash, presence: true
 	validates :activated_gameweek, presence: true
 	validates :name, uniqueness: true
 
-	before_validation :fillin_team_players_values, unless: :testteam
+	before_validation on: :create do
+		self.cash = 100.00
+	end
+	before_validation :fillin_team_players_values, on: :update, unless: :testteam
 
 	protected
 	def fillin_team_players_values

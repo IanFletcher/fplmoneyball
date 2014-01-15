@@ -5,7 +5,9 @@ Fplmoneyball::Application.routes.draw do
 
  #put "players/playerslist" => 'teamplayers#teampersonel', as: 'teampersonel' 
 
- resources :teams
+ resources :users do
+    resources :teams
+ end
  
  root to: 'players#playerslist'
 

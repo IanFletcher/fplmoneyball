@@ -12,7 +12,7 @@
 		<td  id="footballground">
 			<div class='container'>
 				<div class='row'>
-					<p> <%= "#{current_user.id} #{current_user.username}" %> </p>
+					<div id="teamname" class="col-xs-3 pull-left label label-default">Team</div>
 					<div id="teamtally" class="col-xs-3 pull-right label label-info">Cash</div>
 				</div>
 			   <div class='row'>
@@ -44,7 +44,7 @@
 			   </div>
 			   <div>
 			   		<div id="team">
-			   			<%= form_for @team, url: team_path(@team) do |fx| %>
+			   			<%= form_for @team, url: user_team_path(@team.user_id,@team) do |fx| %>
 				   			<%= render 'team' , f: fx %>
 				   				<button type= "button", class= 'btn btn-primary pull-right btn-lg', id='personel'%>Update Team</button>
 	<%= submit_tag "Update", id:'personelsubmit', class:'submitbutton' %>

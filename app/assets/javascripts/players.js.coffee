@@ -51,6 +51,7 @@ $(document).ready(readynoajax)
 $(document).on('page:load', readynoajax)
 
 assemblecurrentteam =->
+  $('#teamname').html($('#team_name').val().italics())
   $('#hidepersonel>.newplayer').each (ind)->
     selectedplayer =
       id: $(this).children('.player_id').val().trim()
