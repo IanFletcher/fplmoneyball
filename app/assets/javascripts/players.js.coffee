@@ -20,7 +20,6 @@ ready = ->
           addteammate(selectedplayer)
         )
 
-
     $("#footballground").undelegate().delegate('.cross', 'click', -> 
         price = $(this).parent().children('.pprice').text()
         selectedpos = $(this).parent().attr('id').trim()
@@ -32,6 +31,7 @@ ready = ->
     insertpositionbuttons()
     arrangevisibility()
     $('#personel').on('click', validateform)
+    $('#flash_notice').delay(7000).slideUp('slow', 'swing')
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
