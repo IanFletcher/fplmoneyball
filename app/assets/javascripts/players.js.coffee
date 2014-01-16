@@ -99,8 +99,8 @@ insertpositionbuttons =->
       )
 
 groundplacement =(selectedplayer)->
-  x = 100 * shirtslide[selectedplayer.club_shortname].x
-  y = 110 * shirtslide[selectedplayer.club_shortname].y
+  x = 87 * shirtslide[selectedplayer.club_shortname].x
+  y = 98 * shirtslide[selectedplayer.club_shortname].y
   if (selectedplayer.placement?)
     spot = $(".placeholder[id = " + selectedplayer.placement + "]")
   else
@@ -109,10 +109,10 @@ groundplacement =(selectedplayer)->
   if $(spot).length
     $(spot).append("<div class='club_box'></div>")
     $(" .club_box" , spot).append("<div class='club_shirts'></div>")
-    $(" .club_box .club_shirts", spot).prepend('<img src="/assets/clubshirts.png" />')
+    $(" .club_box .club_shirts", spot).prepend('<img src="/assets/clubshirts2.png" />')
     $(" .club_box .club_shirts", spot).css({left: "-"+x+"px", top: "-"+y+"px"})
-    $(" .club_box", spot).after("<br><h4 class='playerblk makewhite pprice' style='margin-left:30px'>" + selectedplayer.price + "</h4>")
-    $(" .club_box", spot).after("<h4 class='playerblk makewhite' style='margin-left:7px'>" + selectedplayer.surname + "</h4>")
+    $(" .club_box", spot).after("<br><p class='playerblk makewhite pprice' style='margin-left:30px'>" + selectedplayer.price + "</p>")
+    $(" .club_box", spot).after("<p class='playerblk makewhite' style='margin-left:7px'>" + selectedplayer.surname + "</p>")
     $(" .club_box", spot).after('<img class="playerblk cross" src="/assets/smallx.png" />')
     $(spot).addClass('active')
     spot.attr('id')
