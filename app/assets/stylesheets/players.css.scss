@@ -14,6 +14,15 @@
 	border:0px;
 	padding:0px;
 	margin:0px;
+	th {
+		padding:0px;
+		margin:0px;
+	//	border:0px;
+	};
+	td {
+		padding-top:0px;
+		padding-bottom:0px;
+	};
 };
 
 .pagination
@@ -70,6 +79,16 @@
 		color:black;
 		font-size:13px;
 			};
+	select {
+		height:24px;
+		padding-top:0.2px;
+		padding-bottom:0.2px;
+		padding-right:0px;
+	};
+	p
+	{
+		margin-bottom:0.1px;
+	}
 };
 
 .playercontainer td
@@ -140,3 +159,5 @@
 {
 	width: 970px;
 };
+
+//modal dialogue box

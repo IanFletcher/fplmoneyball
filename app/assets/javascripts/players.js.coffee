@@ -68,7 +68,7 @@ teamvalue =->
 
 positionmarker = (obj, position) ->
   $(obj).parent().before("<tr><td class='"+position+"' colspan='5'>
-    <button type='button' class='btn btn-info col-md-12 "+position+"'>"+position+"</button></td></tr>")
+    <button type='button' class='positionclass btn btn-info btn-xs col-lg-12 "+position+"'>"+position+"</button></td></tr>")
   $("." + position + ">button").click ->
     jQuery("#teamselect_id").val(position).change()
 
@@ -117,7 +117,15 @@ groundplacement =(selectedplayer)->
     $(spot).addClass('active')
     spot.attr('id')
   else
-    alert('No valid spaces left')
+    plypos = {}
+    plypos.g = 'goalie'
+    plypos.d = 'defender'
+    plypos.m = 'midfielder'
+    plypos.s = 'striker'
+    $(".modal-body>blockquote>p").html("There are no valid " + 
+      plypos[selectedplayer.position] + " spaces left for <em><strong>" +
+      selectedplayer.surname + "</em></strong> .")
+    $('#myDialogue').modal('show')
     false
 
 addteammate=(newplayer)->
@@ -137,10 +145,12 @@ validateform =() ->
   #check for tally, team number & unqiue players
   amount = $('#teamtally').text().match(/[\-\d\.]+/g)
   if parseFloat(amount) <= 0
-    alert('Your team is over budget')
+    $(".modal-body>blockquote>p").html('Your team is over budget')
+    $('#myDialogue').modal('show')
   else
     if $('.club_shirts').length < 15
-      alert('Team must have 15 players')
+      $(".modal-body>blockquote>p").html('Teams must have 15 players')
+      $('#myDialogue').modal('show')    
     else
       playerids = []
       $('.player_id').each( (i, x) ->
@@ -148,7 +158,8 @@ validateform =() ->
           playerids.push($(x).val())
       )
       if playerids.length < 15
-        alert('You can only have unique players')
+        $(".modal-body>blockquote>p").html('You can only have unique players')
+        $('#myDialogue').modal('show')
       else
         $('#personelsubmit').click()
 
