@@ -19,7 +19,7 @@ class Team < ActiveRecord::Base
 	def fillin_team_players_values
 		newplayers = self.team_players.select {|p| p if p.new_record?}
 		t = Team.find_by(id: self.id)
-		tally = t.present? ? t.cash : 100.00 
+		tally = t.present? ? t.cash : 100.00
 		arr = []
 		self.team_players.each do |ply|
 			if ply.new_record?
@@ -35,7 +35,7 @@ class Team < ActiveRecord::Base
 			end
 		end
 
-		if self.cash != tally
+		if self.cash != (tally).round(2)
 			logger.debug "self.cash #{self.cash} tally #{tally} t.cash #{t.cash} arr #{arr} "
 			errors.add(:base , "#{self.name} cash doesn't tally.")
 			raise Exception, "Cash doesn't add up"
@@ -43,10 +43,11 @@ class Team < ActiveRecord::Base
 	end
 
 	def swap_player?(newplayers, oldplayer)
+		logger.debug "newplayer are #{newplayers} oldplayer is #{oldplayer}"
 		!newplayers.select {|h| h if h.placement == oldplayer.placement}.empty?
 	end
 
 	def testteam
-		name = 'SydneySting'
+		name == 'SydneySting'
 	end
 end

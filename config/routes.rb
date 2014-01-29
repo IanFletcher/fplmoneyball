@@ -1,15 +1,25 @@
 Fplmoneyball::Application.routes.draw do
  devise_for :users, :path => ''
 
- get "players/playerslist" => 'players#playerslist', as: 'playerslist'
+ get "playerslist" => 'players#playerslist', as: 'playerslist'
 
  #put "players/playerslist" => 'teamplayers#teampersonel', as: 'teampersonel' 
 
  resources :users do
     resources :teams
  end
+
+ #match "squad", to: "team_players#index", via: :get, as: 'squad'
+
+ resources :team_players, path: "", only: [ :update] do
+    collection do
+       match "squad", to: "team_players#index", via: :get, as: 'squad'
+    end
+
+ end
+
  
- root to: 'players#playerslist'
+ #root to: 'players#playerslist'
 
 
   #resources :players do

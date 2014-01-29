@@ -18,4 +18,12 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     '/sign_in'
   end
+  def after_sign_in_path_for(resource)
+    '/playerslist'
+  end
+  private
+ 
+    def auth_user
+      redirect_to user_session_url unless user_signed_in?
+    end
 end

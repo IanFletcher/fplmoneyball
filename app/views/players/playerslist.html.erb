@@ -45,7 +45,7 @@
 			   <div>
 			   		<div id="team">
 			   			<%= form_for @team, url: user_team_path(@team.user_id,@team) do |fx| %>
-				   			<%= render 'team' , f: fx %>
+				   			<%= render 'shared/team' , f: fx %>
 				   				<button type= "button", class= 'btn btn-primary pull-right btn-lg', id='personel'%>Update Team</button>
 	<%= submit_tag "Update", id:'personelsubmit', class:'submitbutton' %>
 				   		<% end %>

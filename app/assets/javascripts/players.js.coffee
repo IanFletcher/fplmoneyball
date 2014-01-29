@@ -1,6 +1,29 @@
 # stuff
 
 ready = ->
+    runplayermarketprocess()
+
+$(document).ready(ready)
+$(document).on('page:load', ready)
+$(document).on('ajaxComplete', ready)
+
+readynoajax = ->
+    runplayermarketnoajax()
+
+$(document).ready(readynoajax)
+$(document).on('page:load', readynoajax)
+
+runplayermarketnoajax = ->
+  if $("title:contains('Player Market')").size() > 0
+    $('#team').on 'click', '.add_fields', (event) ->
+        time = new Date().getTime()
+        regexp = new RegExp($(this).data('id'), 'g')
+        $(this).before($(this).data('fields').replace(regexp, time))
+        event.preventDefault()
+    assemblecurrentteam()
+
+runplayermarketprocess = ->
+  if $("title:contains('Player Market')").size() > 0
     jQuery('.playerdropdown').change ->
         jQuery('#sortsubmit').click()
 
@@ -33,25 +56,11 @@ ready = ->
     $('#personel').on('click', validateform)
     $('#flash_notice').delay(7000).slideUp('slow', 'swing')
 
-$(document).ready(ready)
-$(document).on('page:load', ready)
-$(document).on('ajaxComplete', ready)
 
-readynoajax = ->
-    $('#team').on 'click', '.add_fields', (event) ->
-        time = new Date().getTime()
-        regexp = new RegExp($(this).data('id'), 'g')
-        $(this).before($(this).data('fields').replace(regexp, time))
-        event.preventDefault()
-
-    assemblecurrentteam()
-
-
-$(document).ready(readynoajax)
-$(document).on('page:load', readynoajax)
 
 assemblecurrentteam =->
-  $('#teamname').html($('#team_name').val().italics())
+  if $('#team_name').length > 0
+    $('#teamname').html($('#team_name').val().italics())
   $('#hidepersonel>.newplayer').each (ind)->
     selectedplayer =
       id: $(this).children('.player_id').val().trim()

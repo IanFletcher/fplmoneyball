@@ -43,15 +43,11 @@ class PlayersController < ApplicationController
       defined?(params[:priceband][:id]) ? params[:priceband][:id] : price_bands[0]
   end  
 
-  def team_builder
-    personel = []
-    TeamPlayer::POSITIONPLACES.each do |pos|
-      personel << TeamPlayer.new(placement:pos, team_id:1)
-    end
-    personel
-  end
-
-  def auth_user
-    redirect_to user_session_url unless user_signed_in?
-  end
+#  def team_builder
+#    personel = []
+#    TeamPlayer::POSITIONPLACES.each do |pos|
+#      personel << TeamPlayer.new(placement:pos, team_id:1)
+#    end
+#    personel
+#  end
 end

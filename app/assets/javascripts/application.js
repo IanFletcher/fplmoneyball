@@ -14,6 +14,7 @@
 //= require jquery.ui.all
 //= require jquery_ujs
 //= require turbolinks
+//= require global
 //= require_tree .
 // Loads all Bootstrap javascripts
 //= require bootstrap

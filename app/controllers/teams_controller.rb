@@ -1,4 +1,6 @@
 class TeamsController < ApplicationController
+	before_filter :auth_user
+	
 	def index
 		render params
 	end
