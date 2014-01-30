@@ -11,11 +11,11 @@ Fplmoneyball::Application.routes.draw do
 
  #match "squad", to: "team_players#index", via: :get, as: 'squad'
 
- resources :team_players, path: "", only: [ :update] do
+ resources :team_players, path: "", only: :show do
     collection do
        match "squad", to: "team_players#index", via: :get, as: 'squad'
+       put :update_multiple
     end
-
  end
 
  

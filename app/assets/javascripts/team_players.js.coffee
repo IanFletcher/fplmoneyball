@@ -13,6 +13,11 @@ runsquadprocess = ->
   if $("title:contains('Squad')").size() > 0
     assembleteam()
     applytransfer()
+    $('#firstteamsubmit').on('click', validateform)
+
+validateform = ->
+    $('#squadsubmit').click()
+
 
 applytransfer = ->
   $("#footballground").undelegate()
