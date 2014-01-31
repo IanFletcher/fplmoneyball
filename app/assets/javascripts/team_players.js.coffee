@@ -133,9 +133,13 @@ squadformation = (selectedplayer)->
     
   
 postreservebench = ->
-  bench = $('.newplayer>.bench').filter( -> $(this).val()).length
-  defaultbench() if bench == 0
-
+  bench = $('.newplayer>.bench').filter( -> $(this).val())
+  if $(bench).length == 0
+    defaultbench() 
+  else
+    alert(bench.length)
+    $(bench).siblings('.placement').each( ->
+      makereserve($(this).val()))
 
 defaultbench = ->
   # take last goalie,defender,midfielder, striker
