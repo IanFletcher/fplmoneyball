@@ -14,6 +14,7 @@ runsquadprocess = ->
     assembleteam()
     applytransfer()
     $('#firstteamsubmit').on('click', validateform)
+    $('#flash_notice').delay(7000).slideUp('slow', 'swing')
 
 validateform = ->
     $('#squadsubmit').click()
@@ -91,6 +92,18 @@ class PositionMap
          @counts[position]++
        else 
          @counts[position] = 1
+  adjustfootballground: ->
+    @playerformation()
+    maxline = if counts.d > counts.m then count.d else count.m
+    if maxline = 4
+      #goaliepadding = col-md-4
+      #else goaliepadding = col-md-5
+      #if you are the max midfield/defender
+      #padding md1, colmd2
+      #if you are 1 less md2, colmd2
+      #if you are 2 less md3 colmd2
+
+
 
 footballgroundplayerid = (squadplayer) ->
   player = {}
@@ -137,7 +150,6 @@ postreservebench = ->
   if $(bench).length == 0
     defaultbench() 
   else
-    alert(bench.length)
     $(bench).siblings('.placement').each( ->
       makereserve($(this).val()))
 
