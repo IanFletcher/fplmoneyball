@@ -47,7 +47,8 @@ changereserve = ->
     outofreserves = $('.glyphicon-hand-left').parent()
     playeroff = footballgroundplayerid(goingtoreserves)
     playeron = footballgroundplayerid(outofreserves)
-    if formationrules(playeroff, playeron)
+    posmap = false
+    if posmap = formationrules(playeroff, playeron)
       $(goingtoreserves).children('.glyphicon-hand-right')
         .removeClass('glyphicon-hand-right').addClass('glyphicon-transfer')
       $('div:hidden').children("." + playeron.classname).parent().show()
@@ -59,8 +60,11 @@ changereserve = ->
       $(outofreserves).html($(goingtoreserves).html())
         .removeClass('.vacant')
       $(goingtoreserves).hide()
+      posmap.adjustfootballground()
     else
-      alert('incorrect formation')
+      $("#myDialogueLabel").text('Team Formation Error')
+      $(".modal-body>blockquote>p").html('Wrong formation, you can only have 1 goalie, 3 to 5 defenders, 3 to 5 midfielders & 1 to 3 strikers.')
+      $('#myDialogue').modal('show')
 
 formationrules = (playeroff, playeron) ->
   mp = new PositionMap
@@ -84,7 +88,11 @@ class PositionMap
     @currentpositions.push(position)
   rules: ->
     @playerformation()
-    @counts.g = 1 and @counts.d >= 3 and @counts.m >= 3 and @counts.s >= 1 and @counts.g? and @counts.d? and @counts.m? and @counts.s?
+    if @counts.g = 1 and @counts.d >= 3 and @counts.m >= 3 and @counts.s >= 1 and @counts.g? and @counts.d? and @counts.m? and @counts.s?
+      #give positionmap back
+      this
+    else
+      false
   playerformation: ->
     @counts = {}
     for position in @currentpositions
@@ -94,16 +102,14 @@ class PositionMap
          @counts[position] = 1
   adjustfootballground: ->
     @playerformation()
-    maxline = if counts.d > counts.m then count.d else count.m
-    if maxline = 4
-      #goaliepadding = col-md-4
-      #else goaliepadding = col-md-5
-      #if you are the max midfield/defender
-      #padding md1, colmd2
-      #if you are 1 less md2, colmd2
-      #if you are 2 less md3 colmd2
-
-
+    #6 - counts
+    @fixoffset(positionletter, count) for positionletter, count of @counts
+  fixoffset: (posletter, totalcolumns) ->
+    maxoffset = 6
+    pospadding = posletter + "padding"
+    columnoffset = maxoffset - totalcolumns
+    $("#" + pospadding).removeClass($("#" + pospadding).attr('class'))
+      .addClass("col-md-" + columnoffset.toString())
 
 footballgroundplayerid = (squadplayer) ->
   player = {}
@@ -152,6 +158,8 @@ postreservebench = ->
   else
     $(bench).siblings('.placement').each( ->
       makereserve($(this).val()))
+  mp = new PositionMap
+  mp.adjustfootballground()
 
 defaultbench = ->
   # take last goalie,defender,midfielder, striker
