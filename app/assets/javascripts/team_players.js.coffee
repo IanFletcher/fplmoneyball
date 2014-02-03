@@ -109,8 +109,10 @@ class PositionMap
     maxoffset = 6
     pospadding = posletter + "padding"
     columnoffset = maxoffset - totalcolumns
+    classpadding = "col-md-" + columnoffset.toString() + " col-sm-" + 
+      columnoffset.toString()
     $("#" + pospadding).removeClass($("#" + pospadding).attr('class'))
-      .addClass("col-md-" + columnoffset.toString())
+      .addClass(classpadding)
 
 footballgroundplayerid = (squadplayer) ->
   player = {}
