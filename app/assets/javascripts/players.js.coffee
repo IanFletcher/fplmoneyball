@@ -54,7 +54,7 @@ runplayermarketprocess = ->
     insertpositionbuttons()
     arrangevisibility()
     $('#personel').on('click', validateform)
-    $('#flash_notice').delay(7000).slideUp('slow', 'swing')
+#    $('#flash_notice').delay(7000).slideUp('slow', 'swing')
 
 
 

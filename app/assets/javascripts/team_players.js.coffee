@@ -4,6 +4,7 @@
 
 ready = ->
   runsquadprocess()
+  $('#flash_notice').delay(7000).slideUp('slow', 'swing')
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
@@ -14,7 +15,7 @@ runsquadprocess = ->
     assembleteam()
     applytransfer()
     $('#firstteamsubmit').on('click', validateform)
-    $('#flash_notice').delay(7000).slideUp('slow', 'swing')
+#    $('#flash_notice').delay(7000).slideUp('slow', 'swing')
 
 validateform = ->
     $('#squadsubmit').click()
@@ -88,7 +89,7 @@ class PositionMap
     @currentpositions.push(position)
   rules: ->
     @playerformation()
-    if @counts.g = 1 and @counts.d >= 3 and @counts.m >= 3 and @counts.s >= 1 and @counts.g? and @counts.d? and @counts.m? and @counts.s?
+    if @counts.g == 1 and @counts.d >= 3 and @counts.m >= 3 and @counts.s >= 1 and @counts.g? and @counts.d? and @counts.m? and @counts.s?
       #give positionmap back
       this
     else
@@ -172,10 +173,10 @@ makereserve = (res) ->
   if res.search('g') == 0
     reserveseat = $('#reservegoalie.vacant')
   else
-    reserveseat = $("[id*='reserve'].vacant").first()
+    reserveseat = $("[id*='reserve'].vacant").filter( ->
+      g = $(this).attr('id').match(/\d/)).first()
 
   $(reserveseat).html($('#' + res).html()).removeClass('vacant')
-
   player_id = $('#' + res).children('.club_box').attr('class')
     .split(' ')[1].replace( /^\D+/g, '')
   #update bench with reserve status
