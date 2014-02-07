@@ -15,4 +15,7 @@ module ApplicationHelper
     	end
     	link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
   	end
+  	def teamid
+  		Team.find_by(user_id: current_user.id).id
+  	end
 end

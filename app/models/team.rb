@@ -1,6 +1,7 @@
 class Team < ActiveRecord::Base
 	has_many :team_players, dependent: :destroy
 	has_many :players, through: :team_players
+	has_many :gameweek_balancesheets
 	accepts_nested_attributes_for :team_players, allow_destroy: true
 
 	belongs_to :user
@@ -14,6 +15,35 @@ class Team < ActiveRecord::Base
 		self.cash = 100.00
 	end
 	before_validation :fillin_team_players_values, on: :update, unless: :testteam
+
+	def current_balance
+		gw = Gameweek.find_by(current:true)
+		if !(bs = find_balancesheet(gw.id))
+			bs = GameweekBalancesheet.new(team_id: id, gameweek_id: gw.id)
+			if prev_bs = find_balancesheet((gw.id - 1))
+				bs.open_cash = prev_bs.cash
+				bs.open_team_value = prev_bs.team_value
+			else
+				bs.open_cash = 100.00
+				bs.open_team_value = 0.0
+			end
+		end
+		bs.player_earnings = 0.0
+		bs.costs_variable = 0.0
+		bs.costs_fixed = 0.0
+		bs.transfer_fees = 0.0
+		bs.player_exchange_value = 0.0
+		bs.cash = cash
+		bs.team_value = Player.joins(:team_players)
+		  .where("team_players.deactivated_gameweek is null and 
+		  	team_players.team_id = ?", id).sum(:price)
+		bs.save
+		bs
+	end
+
+	def find_balancesheet(gameweek_id)
+		gameweek_balancesheets.find_by(gameweek_id: gameweek_id,  team_id: id)
+	end
 
 	protected
 	def fillin_team_players_values

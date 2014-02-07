@@ -11,7 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140118000413) do
+ActiveRecord::Schema.define(version: 20140204070923) do
+
+  create_table "gameweek_balancesheets", force: true do |t|
+    t.integer  "gameweek_id"
+    t.integer  "team_id"
+    t.decimal  "open_cash",             precision: 4, scale: 2
+    t.decimal  "open_team_value",       precision: 4, scale: 2
+    t.decimal  "player_earnings",       precision: 4, scale: 2
+    t.decimal  "costs_variable",        precision: 4, scale: 2
+    t.decimal  "costs_fixed",           precision: 4, scale: 2
+    t.decimal  "transfer_fees",         precision: 4, scale: 2
+    t.decimal  "player_exchange_value", precision: 4, scale: 2
+    t.decimal  "cash",                  precision: 4, scale: 2
+    t.decimal  "team_value",            precision: 4, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "gameweeks", force: true do |t|
+    t.boolean  "current"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.boolean  "open"
+    t.boolean  "closed"
+    t.string   "status",     limit: 30
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "players", force: true do |t|
     t.string   "surname",                limit: 30

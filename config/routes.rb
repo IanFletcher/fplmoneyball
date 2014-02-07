@@ -5,8 +5,12 @@ Fplmoneyball::Application.routes.draw do
 
  #put "players/playerslist" => 'teamplayers#teampersonel', as: 'teampersonel' 
 
- resources :users do
-    resources :teams
+ resources :users, shallow: true do
+    resources :teams do
+      member do
+       match "balancesheet", to:"teams#balancesheet", via: :get, as: "balancesheet"
+      end
+    end
  end
 
  #match "squad", to: "team_players#index", via: :get, as: 'squad'
@@ -17,6 +21,12 @@ Fplmoneyball::Application.routes.draw do
        put :update_multiple
     end
  end
+
+ #resources :gameweek do
+ #  resources :gameweek_balancesheets, only: :show do
+ #    match "balancesheet", to: "gameweek_balacesheets#show", via: :get, as: 'balancesheet'
+ #  end
+# end
 
  
  #root to: 'players#playerslist'
