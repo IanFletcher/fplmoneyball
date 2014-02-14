@@ -18,13 +18,15 @@ class TeamsController < ApplicationController
 	end
 
 	def balancesheet
-		logger.debug "balancesheet params #{params[:id]}"
 		if authorized_team(params[:id])
 		  @team = Team.find_by(user_id: current_user.id)
 		  @gameweeks = Gameweek.all
 		  @balancesheet = @team.current_balance
-		  
 		end
+	end
+
+	def gwbalancesheet
+		logger.debug "im here params #{params}"
 	end
 
   private

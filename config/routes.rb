@@ -9,6 +9,7 @@ Fplmoneyball::Application.routes.draw do
     resources :teams do
       member do
        match "balancesheet", to:"teams#balancesheet", via: :get, as: "balancesheet"
+       match "gwbalancesheet", to:"teams#gwbalancesheet", via: :get, as: "gwbalancesheet"
       end
     end
  end
