@@ -52,16 +52,39 @@ bonus = [0,0,0,0,0,0,0,0,0,0,1,1,1,2,3]
 	total_income:rand(90..2000)/100.00, income:rand(1..12)/10.0)
 end
 
-puts "-- Finshed adding #{PLAYERNUMBER} --"
+puts "-- Finished adding #{PLAYERNUMBER} --"
+
+User.delete_all
+puts "*** delete all Users"
+
+ian = User.create!(email: 'ianfletcher9@gmail.com', 
+	favorateclub: 'Chelsea', firstname: 'Ian', surname: 'Fletcher',
+	country: 'Australia', password: 'password1', 
+	password_confirmation:'password1')
+
+james = User.create!(email: 'james@gmail.com', 
+	favorateclub: 'Manchester United', firstname: 'James', surname: 'Tweed',
+	country: 'Australia', password: 'password2', 
+	password_confirmation:'password2')
+
+min = User.create!(email: 'min@gmail.com', 
+	favorateclub: 'Manchester City', firstname: 'Min', surname: 'Kang',
+	country: 'Australia', password: 'password3', 
+	password_confirmation:'password3')
+puts '*** added users ***'
+
 
 Team.delete_all
 TeamPlayer.unscoped.delete_all
 
 puts "*** delete all teams"
 
-Team.create(name: 'Toecutters', cash:100.00, activated_gameweek: 1)
-Team.create(name: 'SydneySting', cash:10.00, activated_gameweek: 1)
-Team.create(name: 'Mins Giants', cash:100.00, activated_gameweek: 1)
+Team.create(name: 'Toecutters', cash:100.00, activated_gameweek: 1, 
+	user_id: ian.id)
+Team.create(name: 'SydneySting', cash:10.00, activated_gameweek: 1, 
+	user_id: james.id)
+Team.create(name: 'Mins Giants', cash:100.00, activated_gameweek:1,
+	user_id: min.id)
 
 puts "-- Create a team for SydneySting --"
 def addplayers(tm , squad)
@@ -73,13 +96,15 @@ def addplayers(tm , squad)
 			.save(validate: false)
 	end
 end
-
+def squad_players(position, numbr)
+	Player.where("position = ? and price <= ?", position, 6.5).limit(numbr)
+end
 
 t = Team.find_by(name: 'SydneySting')
-addplayers(t, Player.where(position:'g').limit(2))
-addplayers(t, Player.where(position:'d').limit(5))
-addplayers(t, Player.where(position:'m').limit(5))
-addplayers(t, Player.where(position:'s').limit(3))
+addplayers(t, squad_players('g', 2))
+addplayers(t, squad_players('d', 5))
+addplayers(t, squad_players('m', 5))
+addplayers(t, squad_players('s', 3))
 
 teams = Team.all
 puts "-- Finshed adding Teams #{teams.length}--"

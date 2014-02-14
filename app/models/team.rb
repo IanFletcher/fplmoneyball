@@ -78,6 +78,6 @@ class Team < ActiveRecord::Base
 	end
 
 	def testteam
-		name == 'SydneySting'
+		name == 'test'
 	end
 end

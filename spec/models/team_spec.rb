@@ -13,7 +13,7 @@ describe Team do
 	end
 	it 'should require cash' do
 		toecutters.cash = ''
-		expect(toecutters).not_to be_valid
+		toecutters.errors.messages.should include{/Cash doesn't add/}
 	end
 	it 'should require an active gameweek' do
 		toecutters.activated_gameweek = ''

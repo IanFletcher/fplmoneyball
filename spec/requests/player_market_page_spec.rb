@@ -9,11 +9,15 @@ end
 include SquadView
 
 describe 'Player Market' do 
-
 	subject {page}
 
 	describe 'screen' do
 		before(:each) do
+			visit new_user_session_path
+        	fill_in 'Email', :with => 'james@gmail.com'
+  			fill_in 'Password', :with => 'password2'
+    		click_button 'Sign in'
+
 			visit playerslist_path
 		end
 
@@ -53,8 +57,10 @@ describe 'Player Market' do
 		describe 'using transfers', js: true do
 			def goalie_surname
 				teamgoalies = []
-				teamgoalies << find(:xpath, ".//*[@id='g1']/h4[1]").text
-				teamgoalies << find(:xpath, ".//*[@id='g2']/h4[1]").text
+		#		teamgoalies << find(:xpath, ".//*[@id='g1']/h4[1]").text
+				teamgoalies << find(:css, "#g1 :nth-child(3)").text
+				teamgoalies << find(:css, "#g2 :nth-child(3)").text
+		#		teamgoalies << find(:xpath, ".//*[@id='g2']/h4[1]").text
 				click_button('Goalies')
 				sleep(1)
 				surname = ''
