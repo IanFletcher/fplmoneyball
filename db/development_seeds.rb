@@ -108,3 +108,6 @@ addplayers(t, squad_players('s', 3))
 
 teams = Team.all
 puts "-- Finshed adding Teams #{teams.length}--"
+
+currentgw = Gameweek.create(current:true, start_date: DateTime.now.beginning_of_week,
+	  end_date: DateTime.now.end_of_week, open:true, status:'Active')

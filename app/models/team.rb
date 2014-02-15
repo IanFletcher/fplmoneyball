@@ -42,7 +42,11 @@ class Team < ActiveRecord::Base
 	end
 
 	def find_balancesheet(gameweek_id)
-		gameweek_balancesheets.find_by(gameweek_id: gameweek_id,  team_id: id)
+		if gameweek_id
+		  gameweek_balancesheets.find_by(gameweek_id: gameweek_id,  team_id: id)
+		else
+		  nil
+		end
 	end
 
 	protected
