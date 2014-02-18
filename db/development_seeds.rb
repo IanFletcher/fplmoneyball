@@ -100,7 +100,7 @@ def squad_players(position, numbr)
 	Player.where("position = ? and price <= ?", position, 6.5).limit(numbr)
 end
 
-t = Team.find_by(name: 'SydneySting')
+t = Team.find_by(james)
 addplayers(t, squad_players('g', 2))
 addplayers(t, squad_players('d', 5))
 addplayers(t, squad_players('m', 5))
@@ -108,6 +108,24 @@ addplayers(t, squad_players('s', 3))
 
 teams = Team.all
 puts "-- Finshed adding Teams #{teams.length}--"
+Gameweek.delete_all
 
-currentgw = Gameweek.create(current:true, start_date: DateTime.now.beginning_of_week,
-	  end_date: DateTime.now.end_of_week, open:true, status:'Active')
+gw = DateTime.now
+20.times do |i|
+	st, ed = gw.beginning_of_week, gw.end_of_week
+	gw = gw + 1.week
+	if i == 3
+		current = true
+		status = 'Active'
+		openon = true
+	else
+		status = i < 3 ? 'Past' : 'Future'
+		current = false
+		openon = false 
+	end
+	currentgw = Gameweek.create(current:current, 
+	  start_date: st,
+	  end_date: ed, open:openon, status:status)
+end
+
+puts "-- Added #{Gameweek.count} gameweeks --"
