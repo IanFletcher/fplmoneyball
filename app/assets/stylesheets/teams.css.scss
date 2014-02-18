@@ -68,5 +68,29 @@
 	button
 	{
 		background-color:RoyalBlue;
-	}
-}
+	};
+};
+
+#balancedetails
+{
+	background-image: image-url("dark-grey-tile.png");
+	color: #B3B3B3;
+	hr 
+	{
+    background: #B3B3B3; 
+    width: 75%; 
+    height: 3px;
+	};
+};
+#sheetheading
+{
+	text-decoration:underline;
+};
+.equals
+{
+	border-top-style: groove; 
+	border-bottom-style: groove; 
+	border-top: thick single #B3B3B3;
+	border-bottom: thick single #B3B3B3;
+};
+
