@@ -52,6 +52,8 @@
 };
 #gameweeksgrid
 {
+	background-image: image-url("footballground.jpg");
+	background-size:cover;
 	[class*="col-"]
 	{
 		padding:0px !important;
@@ -64,10 +66,10 @@
 
 .activegw
 {
-	background-color:RoyalBlue;
+	background-color:DodgerBlue;
 	button
 	{
-		background-color:RoyalBlue;
+		background-color:DodgerBlue;
 	};
 };
 
@@ -80,9 +82,15 @@
     background: #B3B3B3; 
     width: 75%; 
     height: 3px;
+    margin:8px 50px;
 	};
+	h1
+	{
+		padding:0px;
+		margin:5px;
+	}
 };
-#sheetheading
+.sheetheading
 {
 	text-decoration:underline;
 };

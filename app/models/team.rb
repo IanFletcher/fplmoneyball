@@ -28,7 +28,7 @@ class Team < ActiveRecord::Base
 				bs.open_team_value = 0.0
 			end
 		end
-		bs.player_earnings = 0.0
+		bs.player_earnings = -1300.0
 		bs.costs_variable = 0.0
 		bs.costs_fixed = 0.0
 		bs.transfer_fees = 0.0
