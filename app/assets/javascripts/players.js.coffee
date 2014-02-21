@@ -142,6 +142,8 @@ addteammate=(newplayer)->
   $('#hidepersonel .player_id').last().val(newplayer.id)
   $('#hidepersonel .placement').last().val(newplayer.placement)
   $('#hidepersonel .buy_price').last().val(newplayer.price)
+  $('#hidepersonel .bench').last()
+    .val($('.newplayer .' + newplayer.placement + '.bench').val())
 
 teamtally =(amount)->
     teamcash=  $('#team_cash').val()

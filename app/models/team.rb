@@ -51,19 +51,21 @@ class Team < ActiveRecord::Base
 
 	protected
 	def fillin_team_players_values
+		opengw = Gameweek.find_by(open: true)
 		newplayers = self.team_players.select {|p| p if p.new_record?}
 		t = Team.find_by(id: self.id)
 		tally = t.present? ? t.cash : 100.00
 		arr = []
 		self.team_players.each do |ply|
 			if ply.new_record?
-				ply.buy_price = ply.player.price
-				ply.buy_gameweek = 1
+				ply.buy_price = ply.player.price.round(2)
+				ply.buy_gameweek = opengw.id
 				ply.buy_date = DateTime.now
 				tally = tally - ply.player.price
+				logger.debug "surname #{ply.player.surname} placement #{ply.placement} bench #{ply.bench}"
 			elsif swap_player? newplayers, ply
 				ply.sell_date = DateTime.now
-				ply.deactivated_gameweek = 1
+				ply.deactivated_gameweek = opengw.id
 				ply.sell_price= ply.player.price
 				tally = tally + ply.player.price
 			end

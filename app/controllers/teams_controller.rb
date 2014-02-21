@@ -45,6 +45,7 @@ class TeamsController < ApplicationController
   	  end
 	  def team_params
     	params.require(:team).permit(:name, :cash, team_players_attributes: 
-    		[:team_id, :player_id, :placement, :buy_price, :buy_gameweek, :buy_date, :id, player_attributes: []])
+    		[:team_id, :player_id, :placement, :buy_price, :buy_gameweek, :buy_date, 
+    			:id, :bench, player_attributes: []])
   	  end  
 end
