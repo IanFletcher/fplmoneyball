@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :configure_permitted_parameters, if: :devise_controller?
-
+  
   protected
 
   def configure_permitted_parameters
@@ -22,8 +22,7 @@ class ApplicationController < ActionController::Base
     '/playerslist'
   end
   private
- 
-    def auth_user
+     def auth_user
       redirect_to user_session_url unless user_signed_in?
     end
 end

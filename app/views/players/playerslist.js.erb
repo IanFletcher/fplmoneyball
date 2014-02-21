@@ -1,2 +1,2 @@
 $("#playermarket").empty();
-$("<%= escape_javascript(render 'playermarket', players: @players) %>").appendTo("#playermarket");
+$("<%= j(render 'playermarket', players: @players) %>").appendTo("#playermarket");

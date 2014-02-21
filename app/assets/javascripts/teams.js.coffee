@@ -27,39 +27,46 @@ class Carousel
     @right = "right"
     @slides = $('.weekbox').size() * -1
     @currentx = 0
+    @self = this
     @attachbuttons()
     @startinglocation()
-  startinglocation: ()->
-    slides = @slides * -1
+  startinglocation: ->
     self = this
     $('.weekbox button').each( (index, element)->
-      if $(element).attr('class').match(/activegw/)
+      if $(element).attr('class').match(/activegw/) 
+        self.currentx = index
+        x = self.adjust(index)
+        self.step(x))
+
+  adjust: (index) ->
+        slides = @self.slides * -1
         if index < 3 
           x = 0
         else
           if slides > index then x = index - 4 else x = slides - 3
-        self.currentx = x
-        self.step(x)
-    )
+        x
+
   attachbuttons: ->
-    selfinstance = this
+    self = this
     $("#gameweeksgrid").on('click', ".arrowbox", (event) ->
       move = $(this).attr('class').split(' ')[1].trim()
-      selfinstance.speed = 500
-      selfinstance.direction(move)
+      self.speed = 500
+      self.direction(move)
       )
     $("#gameweeksgrid").on('dblclick', ".arrowbox", (event) ->
       move = $(this).attr('class').split(' ')[1].trim()
-      selfinstance.speed = 250
-      selfinstance.direction(move)
-      selfinstance.direction(move)
+      self.speed = 250
+      self.direction(move)
+      self.direction(move)
       )  
     $("#gameweeksgrid").on('click', "#gwbutton", (event) ->
-      selfinstance.reset()
+      self.reset()
     )
 
   reset: ->
-    @step(@currentx)
+    x = @adjust(@currentx)
+    @step(x)
+    $('.gwsubmit').eq(@currentx).click()
   direction: (move) ->
     x = @x
     if @left == move 

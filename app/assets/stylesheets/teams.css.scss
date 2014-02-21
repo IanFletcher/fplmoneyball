@@ -50,10 +50,15 @@
 	background-color:Silver;
 	font-size:40px;
 };
-#gameweeksgrid
+#groundbackground
 {
 	background-image: image-url("footballground.jpg");
 	background-size:cover;
+	background-repeat:no-repeat;
+
+};
+#gameweeksgrid
+{
 	[class*="col-"]
 	{
 		padding:0px !important;
@@ -88,7 +93,7 @@
 	{
 		padding:0px;
 		margin:5px;
-	}
+	};
 };
 .sheetheading
 {
@@ -101,4 +106,3 @@
 	border-top: thick single #B3B3B3;
 	border-bottom: thick single #B3B3B3;
 };
-

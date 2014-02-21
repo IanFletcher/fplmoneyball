@@ -4,7 +4,7 @@
 
 ready = ->
   runsquadprocess()
-  $('#flash_notice').delay(7000).slideUp('slow', 'swing')
+  $('#flash_notice').delay(5000).slideUp('slow', 'swing')
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
