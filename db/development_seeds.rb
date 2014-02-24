@@ -148,7 +148,7 @@ def team_balancesheets(name)
 			open_cash = 100.00
 			open_team_value = 0.00
 		end
-		earnings = rand(300)/100.00
+		earnings = (rand(300)/100.00).round(2)
 		variable = rand(50)/100.00*-1
 		fixed = rand(50)/100*-1
 		transfer = rand(400)/100.00*-1
