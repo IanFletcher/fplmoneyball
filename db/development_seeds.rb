@@ -97,14 +97,21 @@ def addplayers(tm , squad)
 	end
 end
 def squad_players(position, numbr)
-	Player.where("position = ? and price <= ?", position, 6.5).limit(numbr)
+	pl = Player.where("position = ? and price <= ?", position, 6.5)
+	pl.sample(numbr)
 end
 
-t = Team.find_by(james)
-addplayers(t, squad_players('g', 2))
-addplayers(t, squad_players('d', 5))
-addplayers(t, squad_players('m', 5))
-addplayers(t, squad_players('s', 3))
+def new_squad(manager)
+	t = Team.find(manager)
+	addplayers(t, squad_players('g', 2))
+	addplayers(t, squad_players('d', 5))
+	addplayers(t, squad_players('m', 5))
+	addplayers(t, squad_players('s', 3))
+end
+
+new_squad(james)
+new_squad(ian)
+
 
 teams = Team.all
 puts "-- Finshed adding Teams #{teams.length}--"
@@ -129,3 +136,43 @@ gw = DateTime.now
 end
 
 puts "-- Added #{Gameweek.count} gameweeks --"
+GameweekBalancesheet.delete_all
+
+def team_balancesheets(name)
+	tm = Team.find(name)
+	1.upto(4) do |i|
+		if bal = GameweekBalancesheet.find_by(gameweek_id: i - 1, team_id: tm.id)
+			open_cash = bal.cash
+			open_team_value = bal.team_value 
+		else
+			open_cash = 100.00
+			open_team_value = 0.00
+		end
+		earnings = rand(300)/100.00
+		variable = rand(50)/100.00*-1
+		fixed = rand(50)/100*-1
+		transfer = rand(400)/100.00*-1
+		exchange = rand(600)/100.00 * rand(1)%2 == 0 ? 1 : -1
+		if i == 1
+			cash = rand(300)/100.00
+			team_value = 100.00 + ((rand(1)%2 == 0 ? 1 : -1) * rand(300)/100.00)
+		else
+			cash = (open_cash + earnings + variable + fixed + transfer + exchange).round(2)
+			team_value = open_team_value + transfer + (rand(800)/100.00)
+		end
+		if cash < 0.00 
+			team_value = team_value + cash
+			cash = 0.00
+		end
+		GameweekBalancesheet.create(gameweek_id: i, team_id: tm.id, 
+			open_cash: open_cash, open_team_value: open_team_value,
+			player_earnings:earnings, costs_variable:variable,
+			costs_fixed:fixed, transfer_fees: transfer,
+			player_exchange_value:exchange,
+			cash: cash, team_value: team_value)
+	end
+end
+
+puts "-- Add team balancesheets --"
+team_balancesheets(ian)
+team_balancesheets(james)
