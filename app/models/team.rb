@@ -62,7 +62,6 @@ class Team < ActiveRecord::Base
 				ply.buy_gameweek = opengw.id
 				ply.buy_date = DateTime.now
 				tally = tally - ply.player.price
-				logger.debug "surname #{ply.player.surname} placement #{ply.placement} bench #{ply.bench}"
 			elsif swap_player? newplayers, ply
 				ply.sell_date = DateTime.now
 				ply.deactivated_gameweek = opengw.id
@@ -72,14 +71,12 @@ class Team < ActiveRecord::Base
 		end
 
 		if self.cash != (tally).round(2)
-			logger.debug "self.cash #{self.cash} tally #{tally} t.cash #{t.cash} arr #{arr} "
 			errors.add(:base , "#{self.name} cash doesn't tally.")
 			raise Exception, "Cash doesn't add up"
 		end
 	end
 
 	def swap_player?(newplayers, oldplayer)
-		logger.debug "newplayer are #{newplayers} oldplayer is #{oldplayer}"
 		!newplayers.select {|h| h if h.placement == oldplayer.placement}.empty?
 	end
 

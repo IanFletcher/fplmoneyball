@@ -2,9 +2,7 @@ class PlayersController < ApplicationController
   before_filter :auth_user
 
   helper_method :sort_column, :team_selection, :price_bands, :team_filter, :band
-  def playerslist
-    logger.debug "BEFORE index params #{params}"
- 
+  def playerslist 
   	@players = Player.selectclub(team_filter).bandlevel(band).paginate(page: params[:page]).order(sort_column + ' DESC')
     @team = Team.find_by(user_id: current_user.id)
      respond_to do |format|
@@ -42,12 +40,4 @@ class PlayersController < ApplicationController
   def band
       defined?(params[:priceband][:id]) ? params[:priceband][:id] : price_bands[0]
   end  
-
-#  def team_builder
-#    personel = []
-#    TeamPlayer::POSITIONPLACES.each do |pos|
-#      personel << TeamPlayer.new(placement:pos, team_id:1)
-#    end
-#    personel
-#  end
 end

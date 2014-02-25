@@ -26,7 +26,6 @@ class TeamsController < ApplicationController
 	end
 
 	def gwbalancesheet
-		logger.debug "im here params #{params}"
 		@balancesheet = GameweekBalancesheet.find_by(gameweek_id: params[:gameweek_id], team_id: params[:id])
 		flash.now[:notice] = "Gameweek #{params[:gameweek_id]} balancesheet doesn't exist" unless @balancesheet.present?
 		respond_to do |format|
