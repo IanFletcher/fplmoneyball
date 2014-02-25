@@ -5,6 +5,10 @@ class Player < ActiveRecord::Base
 
   scope :teams, -> {select("club").group("club")}
   scope :bandlevel, -> (band) {where('price <=?', band )}
+
+  def self.market_filter(club, price_band, column)
+    self.selectclub(club).bandlevel(price_band).order(column + ' DESC')
+  end
   def self.selectclub(club) 
     case club
       when 'All' then all

@@ -3,12 +3,13 @@ class PlayersController < ApplicationController
 
   helper_method :sort_column, :team_selection, :price_bands, :team_filter, :band
   def playerslist 
-  	@players = Player.selectclub(team_filter).bandlevel(band).paginate(page: params[:page]).order(sort_column + ' DESC')
+  #	@players = Player.selectclub(team_filter).bandlevel(band).paginate(page: params[:page]).order(sort_column + ' DESC')
+    @players = Player.market_filter(team_filter, band, sort_column).paginate(page: params[:page])
     @team = Team.find_by(user_id: current_user.id)
-     respond_to do |format|
-       format.html
-       format.js
-     end
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   private
@@ -35,9 +36,9 @@ class PlayersController < ApplicationController
     end
   end
   def team_filter
-      defined?(params[:teamselect][:id]) ? params[:teamselect][:id] : "All"
+    defined?(params[:teamselect][:id]) ? params[:teamselect][:id] : "All"
   end
   def band
-      defined?(params[:priceband][:id]) ? params[:priceband][:id] : price_bands[0]
+    defined?(params[:priceband][:id]) ? params[:priceband][:id] : price_bands[0]
   end  
 end
