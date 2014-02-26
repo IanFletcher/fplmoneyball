@@ -1,4 +1,3 @@
-# stuff
 
 ready = ->
   runplayermarketprocess()

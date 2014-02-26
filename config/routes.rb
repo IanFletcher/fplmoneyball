@@ -3,7 +3,6 @@ Fplmoneyball::Application.routes.draw do
 
  get "playerslist" => 'players#playerslist', as: 'playerslist'
 
- #put "players/playerslist" => 'teamplayers#teampersonel', as: 'teampersonel' 
 
  resources :users, shallow: true do
     resources :teams do
@@ -14,8 +13,6 @@ Fplmoneyball::Application.routes.draw do
     end
  end
 
- #match "squad", to: "team_players#index", via: :get, as: 'squad'
-
  resources :team_players, path: "", only: :show do
     collection do
        match "squad", to: "team_players#index", via: :get, as: 'squad'
@@ -23,21 +20,6 @@ Fplmoneyball::Application.routes.draw do
     end
  end
 
- #resources :gameweek do
- #  resources :gameweek_balancesheets, only: :show do
- #    match "balancesheet", to: "gameweek_balacesheets#show", via: :get, as: 'balancesheet'
- #  end
-# end
-
- 
- #root to: 'players#playerslist'
-
-
-  #resources :players do
-  #  collection do
-  #     get "players/playerslist" => 'players#index', as: 'playerslist'
-  #  end
-  #end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
