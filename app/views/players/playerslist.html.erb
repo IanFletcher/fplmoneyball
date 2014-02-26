@@ -9,42 +9,42 @@
 					<div id="teamname" class="col-xs-3 pull-left label label-default">Team</div>
 					<div id="teamtally" class="col-xs-3 pull-right label label-info">Cash</div>
 				</div>
-			   <div class='row'>
-			   	   <div class= "col-lg-4"></div>
-				   <div id="g1" class= "col-xs-2 placeholder"></div>
-				   <div id="g2" class= "col-xs-2 placeholder"></div>
-			   </div>
-			   <div class='row'>
-			   	   <div class= "col-lg-1"></div>
-				   <div id="d1" class= "col-xs-2 placeholder"></div>
-				   <div id="d2" class= "col-xs-2 placeholder"></div>
-				   <div id="d3" class= "col-xs-2 placeholder"></div>
-				   <div id="d4" class= "col-xs-2 placeholder"></div>
-				   <div id="d5" class= "col-xs-2 placeholder"></div>
-			   </div>
-			   <div class='row'>
-			   	   <div class= "col-lg-1"></div>
-				   <div id="m1" class= "col-xs-2 placeholder"></div>
-				   <div id="m2" class= "col-xs-2 placeholder"></div>
-				   <div id="m3" class= "col-xs-2 placeholder"></div>
-				   <div id="m4" class= "col-xs-2 placeholder"></div>
-				   <div id="m5" class= "col-xs-2 placeholder"></div>
-			   </div>
-			   <div class='row'>
-			   		<div class="col-lg-3"></div>
-				   <div id="s1" class= "col-xs-2 placeholder"></div>
-				   <div id="s2" class= "col-xs-2 placeholder"></div>
-				   <div id="s3" class= "col-xs-2 placeholder"></div>
-			   </div>
-			   <div>
-			   		<div id="team">
-			   			<%= form_for @team, url: team_path(@team) do |fx| %>
-				   			<%= render 'shared/team' , f: fx %>
-				   				<button type= "button", class= 'btn btn-primary pull-right btn-lg', id='personel'%>Update Team</button>
-	<%= submit_tag "Update", id:'personelsubmit', class:'submitbutton' %>
-				   		<% end %>
-				   	</div>
-			   </div>
+			  <div class='row'>
+			   	<div class= "col-lg-4"></div>
+				  <div id="g1" class= "col-xs-2 placeholder"></div>
+				  <div id="g2" class= "col-xs-2 placeholder"></div>
+			  </div>
+			  <div class='row'>
+		   	 	<div class= "col-lg-1"></div>
+			   	<div id="d1" class= "col-xs-2 placeholder"></div>
+			   	<div id="d2" class= "col-xs-2 placeholder"></div>
+			   	<div id="d3" class= "col-xs-2 placeholder"></div>
+			   	<div id="d4" class= "col-xs-2 placeholder"></div>
+			   	<div id="d5" class= "col-xs-2 placeholder"></div>
+			  </div>
+			  <div class='row'>
+		   	  <div class= "col-lg-1"></div>
+			  	<div id="m1" class= "col-xs-2 placeholder"></div>
+			   	<div id="m2" class= "col-xs-2 placeholder"></div>
+			   	<div id="m3" class= "col-xs-2 placeholder"></div>
+			   	<div id="m4" class= "col-xs-2 placeholder"></div>
+			   	<div id="m5" class= "col-xs-2 placeholder"></div>
+			  </div>
+			  <div class='row'>
+			   	<div class="col-lg-3"></div>
+				  <div id="s1" class= "col-xs-2 placeholder"></div>
+				  <div id="s2" class= "col-xs-2 placeholder"></div>
+				  <div id="s3" class= "col-xs-2 placeholder"></div>
+			  </div>
+			  <div>
+			   	<div id="team">
+		   			<%= form_for @team, url: team_path(@team) do |fx| %>
+			   			<%= render 'shared/team' , f: fx %>
+			   			<button type= "button", class= 'btn btn-primary pull-right btn-lg', id='personel'%>Update Team</button>
+							<%= submit_tag "Update", id:'personelsubmit', class:'submitbutton' %>
+				   	<% end %>
+				   </div>
+			  </div>
 			</div>
 		</td>
 		<td>

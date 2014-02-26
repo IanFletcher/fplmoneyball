@@ -1,14 +1,14 @@
 # stuff
 
 ready = ->
-    runplayermarketprocess()
+  runplayermarketprocess()
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
 $(document).on('ajaxComplete', ready)
 
 readynoajax = ->
-    runplayermarketnoajax()
+  runplayermarketnoajax()
 
 $(document).ready(readynoajax)
 $(document).on('page:load', readynoajax)
@@ -16,32 +16,32 @@ $(document).on('page:load', readynoajax)
 runplayermarketnoajax = ->
   if $("title:contains('Player Market')").size() > 0
     $('#team').on 'click', '.add_fields', (event) ->
-        time = new Date().getTime()
-        regexp = new RegExp($(this).data('id'), 'g')
-        $(this).before($(this).data('fields').replace(regexp, time))
-        event.preventDefault()
+      time = new Date().getTime()
+      regexp = new RegExp($(this).data('id'), 'g')
+      $(this).before($(this).data('fields').replace(regexp, time))
+      event.preventDefault()
     assemblecurrentteam()
 
 runplayermarketprocess = ->
   if $("title:contains('Player Market')").size() > 0
     jQuery('.playerdropdown').change ->
-        jQuery('#sortsubmit').click()
+      jQuery('#sortsubmit').click()
 
     jQuery("tbody .playerdetails").on('click', ->
-        selectedplayer =
-          id: $(this).attr('id').trim()
-          surname: $(".surname",this).text().trim()
-          club_shortname: $(".club_shortname",this).text().trim()
-          price: $(".price",this).last().text().trim()
-          position: $(".position",this).text().trim()
-          squad: 'New'
-          placement: null
-        selectedplayer.placement = groundplacement(selectedplayer).trim()
-        if selectedplayer.placement
-          amount = parseFloat(selectedplayer.price) * -1
-          teamtally(amount)
-          addteammate(selectedplayer)
-        )
+      selectedplayer =
+        id: $(this).attr('id').trim()
+        surname: $(".surname",this).text().trim()
+        club_shortname: $(".club_shortname",this).text().trim()
+        price: $(".price",this).last().text().trim()
+        position: $(".position",this).text().trim()
+        squad: 'New'
+        placement: null
+      selectedplayer.placement = groundplacement(selectedplayer).trim()
+      if selectedplayer.placement
+        amount = parseFloat(selectedplayer.price) * -1
+        teamtally(amount)
+        addteammate(selectedplayer)
+      )
 
     $("#footballground").undelegate().delegate('.cross', 'click', -> 
         price = $(this).parent().children('.pprice').text()
@@ -82,30 +82,30 @@ positionmarker = (obj, position) ->
     jQuery("#teamselect_id").val(position).change()
 
 arrangevisibility =->
-   jQuery(".optional").hide()
-   visclass = jQuery('#playersort_id :selected').val()
-   jQuery("." + visclass + ".optional").show() 
+  jQuery(".optional").hide()
+  visclass = jQuery('#playersort_id :selected').val()
+  jQuery("." + visclass + ".optional").show() 
 
 insertpositionbuttons =->
-    arr = ['Goalies','Defenders','Midfielders','Strikers']
-    posselect = jQuery('#team_id :selected').val()
-    if !(jQuery.inArray(posselect, arr) >=0)
-      prev = 'x'
-      jQuery('tbody .position').each((ind, elem)->
-        curr = jQuery.trim($(elem).text())
-        if curr isnt prev
-          switch curr
-            when "m"
-              positionmarker(elem, "Midfielders")
-            when "g" 
-              positionmarker(elem, "Goalies")
-            when "d" 
-              positionmarker(elem, "Defenders")
-            when "s"
-              positionmarker(elem, "Strikers")
+  arr = ['Goalies','Defenders','Midfielders','Strikers']
+  posselect = jQuery('#team_id :selected').val()
+  if !(jQuery.inArray(posselect, arr) >=0)
+    prev = 'x'
+    jQuery('tbody .position').each((ind, elem)->
+      curr = jQuery.trim($(elem).text())
+      if curr isnt prev
+        switch curr
+          when "m"
+            positionmarker(elem, "Midfielders")
+          when "g" 
+            positionmarker(elem, "Goalies")
+          when "d" 
+            positionmarker(elem, "Defenders")
+          when "s"
+            positionmarker(elem, "Strikers")
 
-        prev = curr
-      )
+      prev = curr
+    )
 
 groundplacement =(selectedplayer)->
   x = 87 * shirtslide[selectedplayer.club_shortname].x
@@ -146,11 +146,11 @@ addteammate=(newplayer)->
     .val($('.newplayer .' + newplayer.placement + '.bench').val())
 
 teamtally =(amount)->
-    teamcash=  $('#team_cash').val()
-    teamamount = (parseFloat(teamcash) + parseFloat(amount)).toFixed(2)
-    $('#team_cash').val(teamamount)
-    teamvalue()
-    $('#teamtally').removeClass('label-info').addClass('label-danger') if teamamount < 0.00
+  teamcash=  $('#team_cash').val()
+  teamamount = (parseFloat(teamcash) + parseFloat(amount)).toFixed(2)
+  $('#team_cash').val(teamamount)
+  teamvalue()
+  $('#teamtally').removeClass('label-info').addClass('label-danger') if teamamount < 0.00
 
 validateform =() ->
   #check for tally, team number & unqiue players
