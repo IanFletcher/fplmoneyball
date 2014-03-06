@@ -14,7 +14,7 @@ class Team < ActiveRecord::Base
 	before_validation on: :create do
 		self.cash = 100.00
 	end
-	before_validation :fillin_team_players_values, on: :update, unless: :testteam
+	validates_with PlayerValues, on: :update
 
 	def current_balance
 		gw = Gameweek.find_by(current:true)
@@ -47,40 +47,5 @@ class Team < ActiveRecord::Base
 		else
 		  nil
 		end
-	end
-
-	protected
-	def fillin_team_players_values
-		opengw = Gameweek.find_by(open: true)
-		newplayers = self.team_players.select {|p| p if p.new_record?}
-		t = Team.find_by(id: self.id)
-		tally = t.present? ? t.cash : 100.00
-		arr = []
-		self.team_players.each do |ply|
-			if ply.new_record?
-				ply.buy_price = ply.player.price.round(2)
-				ply.buy_gameweek = opengw.id
-				ply.buy_date = DateTime.now
-				tally = tally - ply.player.price
-			elsif swap_player? newplayers, ply
-				ply.sell_date = DateTime.now
-				ply.deactivated_gameweek = opengw.id
-				ply.sell_price= ply.player.price
-				tally = tally + ply.player.price
-			end
-		end
-
-		if self.cash != (tally).round(2)
-			errors.add(:base , "#{self.name} cash doesn't tally.")
-			raise Exception, "Cash doesn't add up"
-		end
-	end
-
-	def swap_player?(newplayers, oldplayer)
-		!newplayers.select {|h| h if h.placement == oldplayer.placement}.empty?
-	end
-
-	def testteam
-		name == 'test'
 	end
 end

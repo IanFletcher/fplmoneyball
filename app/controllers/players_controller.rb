@@ -1,7 +1,6 @@
 class PlayersController < ApplicationController
   before_filter :auth_user
 
- # helper_method :sort_column
   def playerslist 
     @player_presenter ||= PlayerPresenter.dropdowns
     @player_presenter.newplayers(player_market, sort_column)
