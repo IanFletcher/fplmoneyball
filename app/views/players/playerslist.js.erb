@@ -1,2 +1,2 @@
 $("#playermarket").empty();
-$("<%= j(render 'playermarket', players: @players) %>").appendTo("#playermarket");
+$("<%= j(render 'playermarket', present: @player_presenter) %>").appendTo("#playermarket");

@@ -23,8 +23,8 @@ runplayermarketnoajax = ->
 
 runplayermarketprocess = ->
   if $("title:contains('Player Market')").size() > 0
-    jQuery('.playerdropdown').change ->
-      jQuery('#sortsubmit').click()
+    $('.playerdropdown').change ->
+      $('#sortsubmit').click()
 
     jQuery("tbody .playerdetails").on('click', ->
       selectedplayer =

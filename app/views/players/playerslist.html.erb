@@ -52,17 +52,20 @@
 		<%= form_tag playerslist_path, method: "get", remote: true, autocomplete: :off, id:"market" do %>
 		<div id = "playerselection" >
 			<p id="transferheading">Player Market</p>
-			<%= label_tag('Team Profile:',nil,class:'label') %>
-			<%= select("teamselect", :id, options_for_select(team_selection,team_filter), {}, html_options = {class: "form-control playerdropdown"}) %>
-			<%= label_tag('Sorting Options:',nil,class:'label') %>
-			<%= select( "playersort", :id, options_for_select( Player::PLAYER_SORT,  sort_column), options = {}, 
-			      html_options = {:class => "form-control playerdropdown"}) %>
-			<%= label_tag('Price Bands:',nil,class:'label') %>
-			<%= select("priceband", :id, options_for_select(price_bands, band), {}, html_options = {class: "form-control playerdropdown"}) %>	 
+
+			<% @player_presenter.newtemplate(self) do |presenter| %>
+			  <%= label_tag('Team Profile:',nil,class:'label') %>
+				<%= presenter.team_dropdown %>
+				<%= label_tag('Sorting Options:',nil,class:'label') %>
+				<%= presenter.playersort_dropdown %>
+				<%= label_tag('Price Bands:',nil,class:'label') %>
+				<%= presenter.priceband_dropdown %>
+			<% end %>
 			<%= submit_tag "Apply", id: "sortsubmit", class:'submitbutton' %>
 			</br>
 		</div>
-		<div id="playermarket"><%= render 'playermarket', players:@players %></div>
+		<div id="playermarket"><%= render 'playermarket', 
+		  present:@player_presenter %></div>
 		<% end %>
 		</td>
 		</tr>
