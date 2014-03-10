@@ -17,7 +17,7 @@ class Team < ActiveRecord::Base
 	validates_with PlayerValues, on: :update
 
 	def current_balance
-		gw = Gameweek.find_by(current:true)
+		gw = Gameweek.current
 		if !(bs = find_balancesheet(gw.id))
 			bs = GameweekBalancesheet.new(team_id: id, gameweek_id: gw.id)
 			if prev_bs = find_balancesheet((gw.id - 1))
