@@ -1,17 +1,38 @@
 FactoryGirl.define do
+#  factory :team do
+#    name   {Faker::Company.name}
+#    cash  100.00
+#    activated_gameweek  1
+#  end
+
+  factory :team_player do 
+    placement 'd1'
+
+    team
+    player
+  end
+
   factory :team do
-    name   Faker::Company.name
+    name   {Faker::Company.name}
     cash  100.00
     activated_gameweek  1
+    factory :team_with_team_player do
+      ignore do
+        player_count 1
+      end
+      after(:create) do |team, evaluator|
+        create_list(:team_player, evaluator.player_count ,team: team)
+      end
+    end
   end
 
   factory :player do
-  	surname Faker::Name.last_name
-  	firstname Faker::Name.first_name
+  	surname {Faker::Name.last_name}
+  	firstname {Faker::Name.first_name}
   	position 'd'
   	club 'Arsenal'
   	round_score 10
-  	price 12
+  	price 10.0
   	teams_selected_percent 20
   	minutes_played 2500
   	goals_scored 3
@@ -44,3 +65,5 @@ FactoryGirl.define do
   	income 0.22
   end
 end
+
+

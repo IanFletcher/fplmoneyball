@@ -14,7 +14,7 @@ describe 'Player Market' do
 	describe 'screen' do
 		before(:each) do
 			visit new_user_session_path
-        	fill_in 'Email', :with => 'james@gmail.com'
+        fill_in 'Email', :with => 'james@gmail.com'
   			fill_in 'Password', :with => 'password2'
     		click_button 'Sign in'
 
