@@ -7,18 +7,14 @@ module SquadView
 	end
 end
 include SquadView
+include SigninMod
 
 describe 'Player Market' do 
 	subject {page}
 
 	describe 'screen' do
 		before(:each) do
-			visit new_user_session_path
-        fill_in 'Email', :with => 'james@gmail.com'
-  			fill_in 'Password', :with => 'password2'
-    		click_button 'Sign in'
-
-			visit playerslist_path
+			james_signin
 		end
 
 
@@ -44,7 +40,7 @@ describe 'Player Market' do
 		end
 
 		it 'the current squad is displayed on the football ground' do
-			squadplayers = squad(Team.find_by(name: "SydneySting").team_players.joins(:player).pluck(:surname, :placement))
+			squadplayers = squad(Team.find_by(name: james_teamname).team_players.joins(:player).pluck(:surname, :placement))
 			squadplayers.each do |ply|
 				within(:css,  "##{ply.placement}") do
 					has_content?(ply.surname)
@@ -101,7 +97,7 @@ describe 'Player Market' do
 				player_id = find(:css, "tbody>.playerdetails>.surname", text: surname).find(:xpath, "..")[:id]
 				find_by_id(player_id).click
 				click_button('personel')
-				squadplayer = Team.find_by(name: "SydneySting").team_players.find_by(player_id: player_id)
+				squadplayer = Team.find_by(name: james_teamname).team_players.find_by(player_id: player_id)
 				expect(squadplayer.present?).to be_true
 			end
 		end
