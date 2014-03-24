@@ -8,6 +8,7 @@ module SquadView
 end
 include SquadView
 include SigninMod
+include NavTest
 
 describe 'Player Market' do 
 	subject {page}
@@ -16,8 +17,9 @@ describe 'Player Market' do
 		before(:each) do
 			james_signin
 		end
-
-
+		it 'should work with all navigation', js: true do
+			test_nav
+		end
 		it {should have_title(/Player Market/)}
 		specify 'team profile produces correct players' do
 			select "Arsenal", from: 'teamselect_id'
