@@ -1,5 +1,5 @@
 Fplmoneyball::Application.routes.draw do
- devise_for :users, :path => ''
+ devise_for :users, :path => '', :controllers => { :registrations => :registrations }
 
  get "playerslist" => 'players#playerslist', as: 'playerslist'
 
