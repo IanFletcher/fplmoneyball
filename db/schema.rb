@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140204070923) do
+ActiveRecord::Schema.define(version: 20140327045453) do
 
   create_table "gameweek_balancesheets", force: true do |t|
     t.integer  "gameweek_id"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 20140204070923) do
     t.integer  "user_id"
   end
 
+  add_index "teams", ["name"], name: "index_teams_on_name"
   add_index "teams", ["user_id"], name: "index_teams_on_user_id"
 
   create_table "users", force: true do |t|
