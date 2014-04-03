@@ -5,9 +5,10 @@ ruby '2.0.0'
 gem 'rails', '4.0.0'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+#gem 'sqlite3'
 
-#rspec
+gem 'pg', '0.17.1'
+
 group :development, :test do
   gem 'rspec-rails', '2.14.0'
   gem 'factory_girl_rails', '4.3.0'
@@ -19,7 +20,12 @@ group :test do
   gem 'selenium-webdriver', '2.38.0'
   gem 'capybara', '2.1.0'
   gem 'launchy', '2.4.2'
- end
+end
+
+group :production do
+	gem 'unicorn', '4.8.2'
+	gem 'rails_12factor', '0.0.2'
+end
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
