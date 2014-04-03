@@ -76,8 +76,7 @@ formationrules = (playeroff, playeron) ->
 class PositionMap
   constructor: ->
     @currentpositions = []
-    onfield = $(".newplayer").filter(-> $(this).children('.bench')
-      .val() == "")
+    onfield = $(".newplayer").filter(-> $(this).children('.bench').val() == "")
     @currentpositions = $(onfield).map( -> $(this).children('.position')
       .val()).get()
   positions: ->
