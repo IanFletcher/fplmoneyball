@@ -1,0 +1,12 @@
+<%= form_tag gwbalancesheet_team_path(@team), method: :get, remote: true, 
+  class: "weekbox gameweek#{gw.id}" do %>
+  <%= content_tag :button, :type => :submit, 
+  		class:"gwsubmit #{'activegw' if gw.current}" do %>
+		<li class="text-center">
+			<strong><%= "Gameweek:#{gw.id}" %></strong>
+			<%= gw.current ? " Current " : "Not Current" %>
+			<span><%= gw.status ? gw.status : "No Status" %></span>
+			<%= hidden_field_tag(:gameweek_id, gw.id, class:'gameweek_id') %>
+		</li>
+	<% end %>
+<% end %>

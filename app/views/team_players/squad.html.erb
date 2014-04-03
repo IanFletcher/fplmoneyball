@@ -1,0 +1,25 @@
+<% provide(:title, 'Squad') %>
+<div class="table-responsive">
+<table id="squadselection" class="table-bordered table table-condensed">
+  <tbody>
+  	<tr> 
+      <%= render "shared/footballground" %>
+  	  <td id="reserves">
+        <%= render 'shared/bench' %>
+  	  </td>
+      <td id="rankings">
+        <div class= "col-md-12">another</div>
+      </td>
+    </tr>
+  </tbody>
+ </table>
+</div>
+<%= form_tag update_multiple_team_players_path, method: 'put' do %>
+  <% @team_players.each do |team_player|  %>
+    <%= fields_for "team_players[#{team_player.id}][]", team_player, index:nil do |fx| %>
+      <%= render 'shared/team_player_fields', tp: fx %>
+    <% end %>
+  <% end %>
+  <%= submit_tag "Apply", id: "squadsubmit", class:'submitbutton' %>
+<% end %>
+<div id="newdialog"><%=render '/shared/dialogbox' %></div>

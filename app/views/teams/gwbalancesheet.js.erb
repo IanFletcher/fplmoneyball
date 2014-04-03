@@ -1,0 +1,8 @@
+<% if @balancesheet.present? %>
+	$("#gameweekstatement").empty();
+	$("<%= j(render 'balancesheet', bs: @balancesheet) %>").appendTo("#gameweekstatement");
+	$(".activegw").removeClass("activegw");
+	$(".gameweek_id[value='<%= @balancesheet.gameweek_id.to_s %>']").parent().parent().addClass('activegw');
+<% else %>
+	$('#ajax_flash').html("<%= escape_javascript raw(flash_display) %>");
+<% end %>

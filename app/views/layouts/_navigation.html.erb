@@ -1,0 +1,11 @@
+<ul id="navigate" class="nav nav-pills navbar-inverse">
+  <li class="<%='active' if current_page? playerslist_path%>">
+  	<%= link_to "Player Market",playerslist_path %></li>
+  <li class="<%='active' if current_page? squad_team_players_path%>">
+    <%= link_to "Squad",squad_team_players_path %></li>
+  <li class="<%='active' if current_page? balancesheet_team_path(teamid)%>">
+    <%= link_to "Balancesheet",balancesheet_team_path(teamid) %></li>
+  <li class="<%='active' if current_page? edit_user_registration_path%>">
+    <%= link_to "Profile", edit_user_registration_path %></li>   
+  <li><%=link_to "Sign Out",destroy_user_session_path,method: :delete %></li>
+</ul>

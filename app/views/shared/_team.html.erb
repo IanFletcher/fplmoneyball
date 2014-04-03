@@ -1,0 +1,12 @@
+<%= f.hidden_field :name %>
+<%= f.hidden_field :cash %>
+<div id= 'hidepersonel'>
+	<%= f.fields_for :team_players , id: 'personelform' do |builder| %>
+		<%= render 'shared/team_player_fields' , {tp: builder}  %>
+	<% end %>
+	<% if params[:action] ='playerslist' %>
+	  <div id = 'newplayers'>
+	  	<%= link_to_add_fields "Add players", f, :team_players %>
+	  </div>
+	<% end %>
+</div>

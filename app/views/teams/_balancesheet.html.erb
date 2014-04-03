@@ -1,0 +1,158 @@
+ <div class="row" >
+	<div class= "col-md-1 col-sm-1"></div>
+	<div  class= "col-md-9 col-sm-9">
+		<div id="balancedetails">
+			<div class="row">
+				<div class= "col-md-1 col-sm-1"></div>
+				<div  class= "col-md-9 col-sm-9">
+					<h1 class="sheetheading"> 
+						Balancesheet Gameweek #<%= bs.gameweek_id - 1%>
+					</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div  class= "col-md-3 col-sm-3 text-right">
+					Open Cash:
+				</div>
+				<div class="col-md-2 col-sm-2 text-right">
+					<%=pounds(bs.open_cash) %>
+				</div>
+			</div>
+			<div class="row">
+				<div  class= "col-md-3 col-sm-3 text-right">
+					Open Team Value:
+				</div>
+				<div  class= "col-md-2 col-sm-2 text-right">	
+					<%=pounds(bs.open_team_value) %>
+				</div>
+			</div>
+			<div class="row open_tally">
+				<div class= "col-md-4 col-sm-4"></div>
+				<div  class= "col-md-1 col-sm-1 text-right equals">
+					<%= pounds(bs.open_cash + bs.open_team_value) %>
+				</div>
+			</div>
+			<div class="row">
+					<div class="hr"><hr /></div>
+			</div>
+			<div class="row">
+				<div class= "col-md-1 col-sm-1"></div>
+				<div  class= "col-md-9 col-sm-9">
+					<h1 class="sheetheading"> Gameweek 
+						#<%= bs.gameweek_id %>
+					</h1>
+				</div>
+			</div>	
+			<div class="row">
+				<div  class= "col-md-3 col-sm-3 text-right">
+					Player Earnings:
+				</div>
+				<div class= "col-md-1 col-sm-1"></div>
+				<div class="col-md-1 col-sm-1 text-right">
+					<%=pounds(bs.player_earnings) %>
+				</div>
+			</div>					
+			<div class="row">
+				<div  class= "col-md-3 col-sm-3 text-right">
+					Weekly Costs -Variable:
+				</div>
+				<div class="col-md-2 col-sm-2 text-right">
+					<%=pounds(bs.costs_variable) %>
+				</div>
+			</div>					
+			<div class="row">
+				<div  class= "col-md-3 col-sm-3 text-right">
+					-Fixed:
+				</div>
+				<div class="col-md-2 col-sm-2 text-right">
+					<%=pounds(bs.costs_fixed) %>
+				</div>
+			</div>					
+			<div class="row">
+				<div  class= "col-md-3 col-sm-3 text-right">
+					Player Transfer Fees
+				</div>
+				<div class="col-md-2 col-sm-2 text-right">
+					<%=pounds(bs.transfer_fees) %>
+				</div>
+			</div>					
+			<div class="row">
+				<div  class= "col-md-3 col-sm-3 text-right">
+					Difference Value on Sale:
+				</div>
+				<div class="col-md-2 col-sm-2 text-right">
+					<%=pounds(bs.player_exchange_value) %>
+				</div>
+			</div>
+			<div class="row net_income">
+				<div  class= "col-md-3 col-sm-3 text-right">
+					Net income/earnings:
+				</div>
+				<div  class= "col-md-1 col-sm-1"></div>
+				<div  class= "col-md-1 col-sm-1 text-right equals">
+					<%= pounds(bs.player_earnings + bs.costs_variable +
+						bs.costs_fixed + bs.transfer_fees + 
+					    bs.player_exchange_value) %>
+				</div>
+			</div>
+			<div class="row">
+				</br>
+			</div>					
+			<div class="row">
+				<div  class= "col-md-3 col-sm-3 text-right">
+					Opening Team Value:
+				</div>
+				<div class="col-md-2 col-sm-2 text-right">
+					<%=pounds(bs.open_team_value) %>
+				</div>
+			</div>
+			<div class="row">
+				</br>
+			</div>					
+			<div class="row">
+				<div  class= "col-md-3 col-sm-3 text-right">
+					New Team Value:
+				</div>
+				<div class="col-md-2 col-sm-2 text-right">
+					<%=pounds(bs.team_value) %>
+				</div>
+			</div>
+			<div class="row">
+					<div class="hr"><hr /></div>
+			</div>
+			<div class="row">
+				<div class= "col-md-1 col-sm-1"></div>
+				<div  class= "col-md-9 col-sm-9">
+					<h1 class="sheetheading"> Balancesheet Gameweek 
+						#<%= bs.gameweek_id %>
+					</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div  class= "col-md-3 col-sm-3 text-right">
+					Cash:
+				</div>
+				<div class="col-md-2 col-sm-2 text-right">
+					<%=pounds(bs.cash) %>
+				</div>
+			</div>
+			<div class="row">
+				<div  class= "col-md-3 col-sm-3 text-right">
+					Team Value:
+				</div>
+				<div  class= "col-md-2 col-sm-2 text-right">	
+					<%=pounds(bs.team_value) %>
+				</div>
+			</div>
+			<div class="row closing_balance">
+				<div class= "col-md-4 col-sm-4"></div>
+				<div  class= "col-md-1 col-sm-1 text-right equals">
+					<%= pounds(bs.cash + bs.team_value) %>
+				</div>
+			</div>
+			<div class="row">
+					<div class="hr"><hr /></div>
+			</div>			
+		</div>
+	</div>
+</div> 

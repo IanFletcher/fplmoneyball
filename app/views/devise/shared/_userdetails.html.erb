@@ -1,0 +1,23 @@
+<div  >
+<%= u.label :firstname , class:"col-md-3 nopadding"%>
+<%= u.label :surname, class:"col-md-offset-1" %><br />
+
+
+<%= u.text_field :firstname, class:"col-md-3 nopadding" %>
+<%= u.text_field :surname, :size => 30, class:"col-md-offset-1" %><br />
+
+
+
+<%= u.label :favorite_club, class:"col-md-3 nopadding" %>
+<%= label_tag :team_name, nil , class:"col-md-offset-1" %><br />
+
+<%= u.text_field :favorateclub, :size => 30, class:"col-md-3 nopadding" %>
+<%= u.fields_for :teams do |t| %>
+  <%= t.text_field :name, :size => 30, class:"col-md-offset-1" %>
+<% end %>
+</div>
+
+<br />
+
+<%= u.label :country, class:"col-md-3 nopadding" %><br />
+<%= u.text_field :country, :size => 30 %></p>
