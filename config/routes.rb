@@ -1,8 +1,11 @@
 Fplmoneyball::Application.routes.draw do
  devise_for :users, :path => '', :controllers => { :registrations => :registrations }
 
- get "playerslist" => 'players#playerslist', as: 'playerslist'
+ devise_scope :user do
+  root :to => 'devise/sessions#new'
+ end
 
+ get "playerslist" => 'players#playerslist', as: 'playerslist'
 
  resources :users, shallow: true, only: :show do
     resources :teams, only: :show do
