@@ -31,7 +31,8 @@ applytransfer = ->
       changereserve())
   $("#footballground").delegate('.glyphicon-hand-right', 'click', ->
     $(this).removeClass('glyphicon-hand-right')
-      .addClass('glyphicon-transfer'))
+      .addClass('glyphicon-transfer')
+      removeplayercolor('#reservebench'))
   $('#reservebench').delegate('.glyphicon-transfer', 'click', ->
     if $('.glyphicon-hand-left').size() == 0
       $(this).removeClass('glyphicon-transfer')
@@ -39,7 +40,11 @@ applytransfer = ->
       changereserve())
   $('#reservebench').delegate('.glyphicon-hand-left', 'click', ->
     $(this).removeClass('glyphicon-hand-left')
-      .addClass('glyphicon-transfer'))
+      .addClass('glyphicon-transfer')
+    removeplayercolor('#footballground'))
+
+removeplayercolor = (ground) ->
+  $(ground + ' div').removeClass('playercolor')
 
 changereserve = ->
   #find hand icons and exchange 
@@ -62,10 +67,24 @@ changereserve = ->
         .removeClass('.vacant')
       $(goingtoreserves).hide()
       posmap.adjustfootballground()
+      removeplayercolor('#reservebench')
+      removeplayercolor('#footballground')
     else
       $("#myDialogueLabel").text('Team Formation Error')
       $(".modal-body>blockquote>p").html('Wrong formation, you can only have 1 goalie, 3 to 5 defenders, 3 to 5 midfielders & 1 to 3 strikers.')
       $('#myDialogue').modal('show')
+  else #highlight player exchange options
+    playercount = $('.glyphicon-hand-right').size()
+    pm = new PositionMap
+    if playercount is 1
+      currentplayer = footballgroundplayerid(
+        $('.glyphicon-hand-right').parent())
+      pm.highlightbench(currentplayer.position)
+    else
+      currentplayer = footballgroundplayerid( 
+        $('.glyphicon-hand-left').parent())
+      pm.highlightonfield(currentplayer.position)
+
 
 formationrules = (playeroff, playeron) ->
   mp = new PositionMap
@@ -89,7 +108,7 @@ class PositionMap
     @currentpositions.push(position)
   rules: ->
     @playerformation()
-    if @counts.g == 1 and @counts.d >= 3 and @counts.m >= 3 and @counts.s >= 1 and @counts.g? and @counts.d? and @counts.m? and @counts.s?
+    if @counts.g is 1 and @counts.d >= 3 and @counts.m >= 3 and @counts.s >= 1 and @counts.g? and @counts.d? and @counts.m? and @counts.s?
       #give positionmap back
       this
     else
@@ -101,6 +120,7 @@ class PositionMap
          @counts[position]++
        else 
          @counts[position] = 1
+    @counts
   adjustfootballground: ->
     @playerformation()
     #6 - counts
@@ -113,6 +133,40 @@ class PositionMap
       columnoffset.toString()
     $("#" + pospadding).removeClass($("#" + pospadding).attr('class'))
       .addClass(classpadding)
+  highlightonfield: (position) =>
+    @remove(position)
+    players = []
+    if @rules()
+      @add(position)
+      @add(position)
+      posline = []
+      for pos in ['d','s','m']
+        @remove(pos)
+        if @rules()
+          posline.push pos
+        @add(pos)  
+      players = for pos in posline
+        $("#footballground div[id ^= " + pos + " ]").map( ->
+          return this if this.id.match /\d/)
+      @remove(position)
+    else # position only
+      alert 'in position'
+      @add(position)
+      players = $("#footballground div[id ^= " + position + " ]")
+        .map( -> return this if this.id.match /\d/)
+    for ply in players
+      $(ply).addClass('playercolor')
+  highlightbench: (position) =>      
+    @remove(position)
+    players = []
+    if @rules()
+      players = ['#reserve1', '#reserve2', '#reserve3']
+    else # postion only
+      players = ["#" + $(".newplayer .bench").filter(-> 
+        $(this).val() isnt "" and
+        $(this).siblings('.position').val() is position).val()]
+    for ply in players
+      $(ply).addClass('playercolor')
 
 footballgroundplayerid = (squadplayer) ->
   player = {}
