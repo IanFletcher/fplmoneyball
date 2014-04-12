@@ -150,11 +150,6 @@ class PositionMap
         $("#footballground div[id ^= " + pos + " ]").map( ->
           return this if this.id.match /\d/)
       @add(position)
-#    else # position only
-#      alert 'in position'
-#      @add(position)
-#      players = $("#footballground div[id ^= " + position + " ]")
-#        .map( -> return this if this.id.match /\d/)
     for ply in players
       $(ply).addClass('playercolor')
   highlightbench: (position) =>      
