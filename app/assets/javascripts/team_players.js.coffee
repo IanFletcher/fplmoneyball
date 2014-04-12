@@ -134,12 +134,13 @@ class PositionMap
     $("#" + pospadding).removeClass($("#" + pospadding).attr('class'))
       .addClass(classpadding)
   highlightonfield: (position) =>
-    @remove(position)
     players = []
-    if @rules()
-      @add(position)
-      @add(position)
+    if position is 'g'
+      players = $("#footballground div[id ^= " + position + " ]")
+        .map( -> return this if this.id.match /\d/)
+    else
       posline = []
+      @add(position)
       for pos in ['d','s','m']
         @remove(pos)
         if @rules()
@@ -148,12 +149,12 @@ class PositionMap
       players = for pos in posline
         $("#footballground div[id ^= " + pos + " ]").map( ->
           return this if this.id.match /\d/)
-      @remove(position)
-    else # position only
-      alert 'in position'
       @add(position)
-      players = $("#footballground div[id ^= " + position + " ]")
-        .map( -> return this if this.id.match /\d/)
+#    else # position only
+#      alert 'in position'
+#      @add(position)
+#      players = $("#footballground div[id ^= " + position + " ]")
+#        .map( -> return this if this.id.match /\d/)
     for ply in players
       $(ply).addClass('playercolor')
   highlightbench: (position) =>      
