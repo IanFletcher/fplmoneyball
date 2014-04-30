@@ -13,16 +13,19 @@
 
 ActiveRecord::Schema.define(version: 20140327045453) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "gameweek_balancesheets", force: true do |t|
     t.integer  "gameweek_id"
     t.integer  "team_id"
     t.decimal  "open_cash",             precision: 5, scale: 2
     t.decimal  "open_team_value",       precision: 5, scale: 2
-    t.decimal  "player_earnings",       precision: 4, scale: 2
-    t.decimal  "costs_variable",        precision: 4, scale: 2
-    t.decimal  "costs_fixed",           precision: 4, scale: 2
-    t.decimal  "transfer_fees",         precision: 4, scale: 2
-    t.decimal  "player_exchange_value", precision: 4, scale: 2
+    t.decimal  "player_earnings",       precision: 6, scale: 3
+    t.decimal  "costs_variable",        precision: 5, scale: 3
+    t.decimal  "costs_fixed",           precision: 5, scale: 3
+    t.decimal  "transfer_fees",         precision: 5, scale: 3
+    t.decimal  "player_exchange_value", precision: 5, scale: 3
     t.decimal  "cash",                  precision: 5, scale: 2
     t.decimal  "team_value",            precision: 5, scale: 2
     t.datetime "created_at"
@@ -102,8 +105,8 @@ ActiveRecord::Schema.define(version: 20140327045453) do
     t.string   "bench"
   end
 
-  add_index "team_players", ["player_id"], name: "index_team_players_on_player_id"
-  add_index "team_players", ["team_id"], name: "index_team_players_on_team_id"
+  add_index "team_players", ["player_id"], name: "index_team_players_on_player_id", using: :btree
+  add_index "team_players", ["team_id"], name: "index_team_players_on_team_id", using: :btree
 
   create_table "teams", force: true do |t|
     t.string   "name",               limit: 30
@@ -114,8 +117,8 @@ ActiveRecord::Schema.define(version: 20140327045453) do
     t.integer  "user_id"
   end
 
-  add_index "teams", ["name"], name: "index_teams_on_name"
-  add_index "teams", ["user_id"], name: "index_teams_on_user_id"
+  add_index "teams", ["name"], name: "index_teams_on_name", using: :btree
+  add_index "teams", ["user_id"], name: "index_teams_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                             default: "", null: false
@@ -136,7 +139,7 @@ ActiveRecord::Schema.define(version: 20140327045453) do
     t.datetime "updated_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

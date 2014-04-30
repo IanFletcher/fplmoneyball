@@ -2,8 +2,8 @@ module NavTest
 	def test_nav
 		current_page = find("#navigate .active a").text
 		nav_pages ={"Player Market" => "Player Market", "Squad" => "Squad",
-			"Balancesheet" => "BalanceSheet", "Profile" => "Edit User",
-			"Sign Out" => "Sign in"}
+			"Balancesheet" => "BalanceSheet", "Profile" => "Edit User"}
+		#	"Sign Out" => "Sign in"}
 		nav_pages.delete(current_page)
 		nav_pages.each do |lnk, title|
 			click_link(lnk)

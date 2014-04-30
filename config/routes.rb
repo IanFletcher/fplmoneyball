@@ -8,7 +8,7 @@ Fplmoneyball::Application.routes.draw do
  get "playerslist" => 'players#playerslist', as: 'playerslist'
 
  resources :users, shallow: true, only: :show do
-    resources :teams, only: :show do
+    resources :teams, only: [:show, :new, :update, :create] do
       member do
        match "balancesheet", to:"teams#balancesheet", via: :get, as: "balancesheet"
        match "gwbalancesheet", to:"teams#gwbalancesheet", via: :get, as: "gwbalancesheet"

@@ -90,8 +90,8 @@ describe 'Player Market' do
 				debit = find_by_id(id).find(".visprice").text
 				find_by_id(id).click
 				cash = (cash.to_f + credit.to_f - debit.to_f).to_s
-				newtally = find('#team_cash', visible: false).value
-				expect(newtally.to_f).to eq(cash.to_f)
+				newtally = find('#team_cash', visible: false).value.to_f
+				expect(newtally.to_f.round).to eq(cash.to_f.round)
 			end
 			it 'swapping players and hit update team brings new players in the team' do
 				surname = goalie_surname

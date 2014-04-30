@@ -27,7 +27,7 @@ class Team < ActiveRecord::Base
 				bs.open_cash = 100.00
 				bs.open_team_value = 0.0
 			end
-			bs.player_earnings = -1300.0
+			bs.player_earnings = -300.0
 			bs.costs_variable = 0.0
 			bs.costs_fixed = 0.0
 			bs.transfer_fees = 0.0
@@ -35,7 +35,7 @@ class Team < ActiveRecord::Base
 			bs.cash = cash
 			bs.team_value = Player.joins(:team_players)
 			  .where("team_players.deactivated_gameweek is null and 
-			  	team_players.team_id = ?", id).sum(:price)
+			  	team_players.team_id = ?", id).sum(:price).round(2)
 			bs.save
 		end
 		bs

@@ -11,21 +11,24 @@ describe 'Squad Screen' do
 	end
 	it 'should work with all navigation', js: true do
 		test_nav
-	end
+	end		
 	it {should have_title(/Squad/)}
 	it 'should contain active squad', js: true do
-		player_ids = Team.find_by(name: james_teamname).team_players.pluck(:player_id)
+		tm = Team.find_by(name: james_teamname)
+		player_ids = tm.team_players.pluck(:player_id)
 		squad_surnames = Player.find(player_ids).map(&:surname)
 		squad_surnames.each {|name| should have_content(name) }
 	end
-	it 'has a reserve bench goalie', js: true do
-		tm = Team.find_by(name: james_teamname)
-		reserve_goalie = tm.team_players.select {|tp| tp.bench == 'reservegoalie' }[0]
-		reserve_goalie = tm.team_players.select {|tp| tp.placement == 'g2' }[0] unless reserve_goalie
-		within("#reservegoalie") do
-			expect(reserve_goalie).to be_present
-		end
-	end
+	#it 'has a reserve bench goalie', js: true do
+	#	tm = Team.find_by(name: james_teamname)
+	#	goalie_id = tm.team_players.map {|tp| tp.player_id if tp.bench == 'reservegoalie' }.compact[0]
+	#	goalie_id = tm.team_players.map {|tp| tp.player_id if tp.placement == 'g2' }.compact[0] unless goalie_id
+	#	within("#reservegoalie") do
+		#	expect(reserve_goalie.player_id).to be_present
+	#		plyid = ".plyid#{goalie_id}"
+	#		should have_selector(plyid)
+	#	end
+	#end
 	describe 'changing reserves', js: true do
 		it 'clicking transfer icon should change icon' do
 			find("#reservegoalie .glyphicon-transfer").click

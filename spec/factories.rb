@@ -13,7 +13,7 @@ FactoryGirl.define do
   end
 
   factory :team do
-    name   {Faker::Company.name}
+    name   {Faker::Company.name[0..29]}
     cash  100.00
     activated_gameweek  1
     factory :team_with_team_player do

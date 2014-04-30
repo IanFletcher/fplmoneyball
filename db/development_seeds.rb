@@ -33,7 +33,8 @@ bonus = [0,0,0,0,0,0,0,0,0,0,1,1,1,2,3]
 	psn = ran(position)
 	svs=psn=="g"?ran(goals):0
 	price_rise_round = ran(bonus).to_f/10
-	newprice = rand((40..100))/10.0.round(1)
+	newprice = rand((40..100))/10.0
+	newprice = newprice.round(1)
 	price_fall_round = price_rise_round == 0 ? ran(bonus).to_f/10 * -1 : 0
 	Player.create(surname: Faker::Name.last_name, firstname: Faker::Name.first_name,
 	position:psn, club: clb, round_score:ran(score),price:newprice,

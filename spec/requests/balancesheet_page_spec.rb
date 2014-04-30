@@ -33,7 +33,7 @@ describe 'Balancesheet screen' do
 			net = (@bs.player_earnings + @bs.costs_variable + @bs.costs_fixed + 
 						@bs.transfer_fees + @bs.player_exchange_value).round(2)
 			within(".net_income") do
-				should have_content(net)
+				should have_content(net.abs.to_s)
 			end
 		end
 		it 'adds closing balance' do
